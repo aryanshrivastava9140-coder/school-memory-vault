@@ -1,14 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Our School Memories</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+rel="stylesheet">
+
+
 <style>
+
+/* =====================================================
+   GLOBAL
+===================================================== */
+
 * {
     box-sizing: border-box;
 }
@@ -18,374 +37,1240 @@ html {
 }
 
 body {
+
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f5f5f5;
-    color: #222;
+
+    background:
+        #f4efe5;
+
+    color: #332d27;
+
+    font-family:
+        "Inter",
+        sans-serif;
 }
 
-/* ================= HEADER ================= */
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+:root {
+
+    --cream: #f4efe5;
+
+    --paper: #fbf8f1;
+
+    --brown: #634c3b;
+
+    --dark-brown: #392d25;
+
+    --muted: #8a7b6d;
+
+    --line: #ded4c5;
+
+    --soft: #ebe3d5;
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
 
 header {
-    background: #111;
-    color: white;
-    text-align: center;
-    padding: 26px 15px;
-}
 
-header h1 {
-    margin: 0;
-    font-size: 25px;
-    letter-spacing: 0.3px;
-}
+    position: relative;
 
-header p {
-    margin: 7px 0 0;
-    color: #aaa;
-    font-size: 13px;
-}
+    min-height: 82vh;
 
-/* ================= CONTAINER ================= */
-
-.container {
-    width: 100%;
-    max-width: 1150px;
-    margin: auto;
-    padding: 22px;
-}
-
-/* ================= BUTTONS ================= */
-
-.actions {
     display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-bottom: 22px;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 40px 20px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            rgba(45,34,27,0.67),
+            rgba(45,34,27,0.72)
+        ),
+        url("https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1800&q=85")
+        center/cover;
 }
 
-button {
-    border: none;
-    border-radius: 8px;
-    padding: 11px 16px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: 0.2s;
+
+/* subtle paper texture */
+
+header::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    opacity: 0.08;
+
+    background-image:
+        radial-gradient(
+            rgba(255,255,255,0.7) 1px,
+            transparent 1px
+        );
+
+    background-size: 5px 5px;
+
+    pointer-events: none;
 }
 
-button:active {
-    transform: scale(0.97);
-}
 
-.primary-btn {
-    background: #111;
+.hero {
+
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 800px;
+
     color: white;
+
 }
 
-.secondary-btn {
-    background: white;
-    color: #222;
-    border: 1px solid #ddd;
+
+.hero-small {
+
+    font-size: 12px;
+
+    letter-spacing: 5px;
+
+    text-transform: uppercase;
+
+    opacity: 0.85;
+
+    margin-bottom: 18px;
 }
 
-.primary-btn:hover {
-    background: #292929;
+
+.hero h1 {
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size:
+        clamp(58px, 11vw, 110px);
+
+    line-height: 0.82;
+
+    font-weight: 500;
+
+    margin: 0;
+
+    letter-spacing: -2px;
 }
 
-/* ================= TITLES ================= */
 
-.page-title {
-    margin: 5px 0 17px;
+.hero-year {
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 25px;
+
+    margin-top: 25px;
+
+    letter-spacing: 4px;
+}
+
+
+.hero-line {
+
+    width: 70px;
+
+    height: 1px;
+
+    background: rgba(255,255,255,0.7);
+
+    margin: 28px auto;
+}
+
+
+.hero-text {
+
+    max-width: 500px;
+
+    margin: auto;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
     font-size: 21px;
+
+    line-height: 1.5;
+
+    opacity: 0.9;
 }
 
-/* ================= FOLDERS ================= */
+
+.explore-btn {
+
+    display: inline-block;
+
+    margin-top: 35px;
+
+    padding: 13px 27px;
+
+    border: 1px solid rgba(255,255,255,0.7);
+
+    border-radius: 30px;
+
+    color: white;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    backdrop-filter:
+        blur(8px);
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    letter-spacing: 1px;
+
+    transition: 0.3s;
+}
+
+
+.explore-btn:hover {
+
+    background: white;
+
+    color: var(--dark-brown);
+
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.main {
+
+    max-width: 1200px;
+
+    margin: auto;
+
+    padding:
+        80px 25px;
+}
+
+
+/* =====================================================
+   INTRO
+===================================================== */
+
+.intro {
+
+    text-align: center;
+
+    max-width: 700px;
+
+    margin:
+        0 auto 70px;
+}
+
+
+.eyebrow {
+
+    color: var(--brown);
+
+    text-transform: uppercase;
+
+    letter-spacing: 3px;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    margin-bottom: 15px;
+}
+
+
+.intro h2 {
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size:
+        clamp(38px, 6vw, 58px);
+
+    font-weight: 500;
+
+    margin:
+        0 0 15px;
+
+    color: var(--dark-brown);
+}
+
+
+.intro p {
+
+    color: var(--muted);
+
+    line-height: 1.8;
+
+    font-size: 15px;
+}
+
+
+/* =====================================================
+   STATS
+===================================================== */
+
+.stats {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 60px;
+
+    margin-bottom: 70px;
+
+    flex-wrap: wrap;
+}
+
+
+.stat {
+
+    text-align: center;
+}
+
+
+.stat-number {
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 42px;
+
+    color: var(--brown);
+
+    line-height: 1;
+}
+
+
+.stat-label {
+
+    margin-top: 7px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+}
+
+
+/* =====================================================
+   SECTION HEADER
+===================================================== */
+
+.section-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 25px;
+
+    border-bottom:
+        1px solid var(--line);
+
+    padding-bottom: 15px;
+}
+
+
+.section-title {
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 34px;
+
+    font-weight: 600;
+
+    color: var(--dark-brown);
+
+    margin: 0;
+}
+
+
+.create-btn {
+
+    background: var(--brown);
+
+    color: white;
+
+    border: none;
+
+    padding: 10px 16px;
+
+    border-radius: 4px;
+
+    cursor: pointer;
+
+    font-size: 12px;
+
+    letter-spacing: 0.5px;
+
+    transition: 0.25s;
+}
+
+
+.create-btn:hover {
+
+    background: var(--dark-brown);
+
+}
+
+
+/* =====================================================
+   ALBUM GRID
+===================================================== */
 
 .folders {
+
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-    gap: 16px;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 22px;
+
+    margin-bottom: 90px;
 }
+
 
 .folder {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 14px;
-    padding: 20px;
+
+    position: relative;
+
+    min-height: 220px;
+
+    padding: 28px;
+
+    background:
+        var(--paper);
+
+    border:
+        1px solid var(--line);
+
     cursor: pointer;
-    transition: 0.2s;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.3s,
+        box-shadow 0.3s;
 }
+
+
+.folder::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 4px;
+
+    background:
+        var(--brown);
+
+    transform:
+        scaleX(0);
+
+    transform-origin:
+        left;
+
+    transition: 0.3s;
+}
+
 
 .folder:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 7px 20px rgba(0,0,0,0.08);
+
+    transform:
+        translateY(-6px);
+
+    box-shadow:
+        0 15px 35px
+        rgba(70,50,35,0.12);
 }
+
+
+.folder:hover::before {
+
+    transform:
+        scaleX(1);
+}
+
+
+.folder-number {
+
+    position: absolute;
+
+    top: 18px;
+
+    right: 20px;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    color:
+        #c7bbaa;
+
+    font-size: 22px;
+}
+
 
 .folder-icon {
-    font-size: 34px;
-    margin-bottom: 12px;
+
+    font-size: 35px;
+
+    margin-bottom: 45px;
 }
+
 
 .folder-name {
-    font-size: 16px;
-    font-weight: bold;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 30px;
+
+    font-weight: 600;
+
+    color:
+        var(--dark-brown);
 }
+
 
 .folder-count {
-    margin-top: 6px;
-    font-size: 13px;
-    color: #888;
+
+    margin-top: 5px;
+
+    color:
+        var(--muted);
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1.5px;
 }
 
-/* ================= UPLOAD ================= */
+
+/* =====================================================
+   MEMORY PAGE
+===================================================== */
+
+#memoryPage {
+
+    display: none;
+}
+
+
+.back-btn {
+
+    background:
+        transparent;
+
+    border:
+        1px solid var(--line);
+
+    color:
+        var(--brown);
+
+    padding:
+        9px 15px;
+
+    border-radius: 3px;
+
+    cursor: pointer;
+
+    margin-bottom: 25px;
+
+    font-size: 12px;
+}
+
+
+.memory-heading {
+
+    text-align: center;
+
+    margin-bottom: 40px;
+}
+
+
+.memory-heading h2 {
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size:
+        clamp(45px, 7vw, 65px);
+
+    font-weight: 500;
+
+    margin: 0;
+
+    color:
+        var(--dark-brown);
+}
+
+
+.memory-heading p {
+
+    color:
+        var(--muted);
+
+    margin-top: 8px;
+}
+
+
+/* =====================================================
+   UPLOAD BOX
+===================================================== */
 
 .upload-box {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 14px;
-    padding: 18px;
-    margin-bottom: 25px;
+
+    max-width: 700px;
+
+    margin:
+        0 auto 50px;
+
+    padding: 28px;
+
+    background:
+        var(--paper);
+
+    border:
+        1px solid var(--line);
+
+    text-align: center;
 }
+
 
 .upload-box h3 {
-    margin: 0 0 12px;
-    font-size: 17px;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 27px;
+
+    font-weight: 600;
+
+    margin:
+        0 0 18px;
 }
+
 
 .file-input {
+
     width: 100%;
-    margin-bottom: 14px;
+
+    margin-bottom: 15px;
+
+    font-size: 12px;
 }
+
+
+.upload-btn {
+
+    background:
+        var(--brown);
+
+    color:
+        white;
+
+    border: none;
+
+    padding:
+        11px 20px;
+
+    border-radius: 3px;
+
+    cursor: pointer;
+
+    font-size: 12px;
+}
+
 
 .status {
-    margin-top: 10px;
-    font-size: 14px;
-    color: #555;
+
+    margin-top: 12px;
+
+    color:
+        var(--muted);
+
+    font-size: 12px;
 }
 
-/* ================= GALLERY ================= */
+
+/* =====================================================
+   MASONRY GALLERY
+===================================================== */
 
 .gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-    gap: 15px;
+
+    columns: 4 220px;
+
+    column-gap: 15px;
 }
+
 
 .memory {
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid #ddd;
-    aspect-ratio: 1 / 1;
-    cursor: pointer;
+
+    break-inside:
+        avoid;
+
+    margin-bottom: 15px;
+
     position: relative;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    background:
+        var(--paper);
 }
+
 
 .memory img {
-    width: 100%;
-    height: 100%;
+
     display: block;
-    object-fit: cover;
-    transition: transform 0.25s ease;
+
+    width: 100%;
+
+    height: auto;
+
+    transition:
+        transform 0.5s ease;
+
 }
+
 
 .memory:hover img {
-    transform: scale(1.04);
+
+    transform:
+        scale(1.035);
 }
 
-/* ================= EMPTY ================= */
+
+/* =====================================================
+   EMPTY
+===================================================== */
 
 .empty {
-    width: 100%;
+
     text-align: center;
-    padding: 55px 20px;
-    color: #888;
-    font-size: 14px;
+
+    padding: 60px 20px;
+
+    color:
+        var(--muted);
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 22px;
 }
 
-/* ================= VIEWER ================= */
+
+/* =====================================================
+   VIEWER
+===================================================== */
 
 .viewer {
+
     display: none;
+
     position: fixed;
+
     inset: 0;
+
     z-index: 9999;
-    background: rgba(0,0,0,0.96);
+
+    background:
+        rgba(35,27,22,0.97);
+
     align-items: center;
+
     justify-content: center;
+
     touch-action: pan-y;
 }
 
+
 .viewer.active {
+
     display: flex;
 }
+
 
 .viewer-image {
-    max-width: 86%;
-    max-height: 84vh;
+
+    max-width: 88%;
+
+    max-height: 85vh;
+
     object-fit: contain;
-    border-radius: 8px;
+
     user-select: none;
+
+    border-radius: 2px;
 }
 
-/* ================= VIEWER BUTTONS ================= */
 
 .close-viewer {
+
     position: absolute;
-    top: 18px;
-    right: 22px;
+
+    top: 20px;
+
+    right: 25px;
+
     color: white;
-    font-size: 36px;
-    line-height: 1;
+
+    font-size: 38px;
+
     cursor: pointer;
+
     z-index: 3;
 }
+
 
 .nav-button {
+
     position: absolute;
+
     top: 50%;
-    transform: translateY(-50%);
+
+    transform:
+        translateY(-50%);
+
     width: 48px;
+
     height: 48px;
+
     border-radius: 50%;
-    background: rgba(255,255,255,0.15);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.25);
+
+    background:
+        rgba(255,255,255,0.08);
+
     color: white;
-    font-size: 28px;
+
+    font-size: 30px;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
+    cursor: pointer;
+
     z-index: 3;
-    backdrop-filter: blur(5px);
 }
 
-.nav-button:hover {
-    background: rgba(255,255,255,0.28);
-}
 
 .previous {
-    left: 18px;
+
+    left: 25px;
 }
+
 
 .next {
-    right: 18px;
+
+    right: 25px;
 }
+
 
 .photo-counter {
+
     position: absolute;
-    bottom: 22px;
+
+    bottom: 25px;
+
     left: 50%;
-    transform: translateX(-50%);
+
+    transform:
+        translateX(-50%);
+
     color: white;
-    background: rgba(0,0,0,0.5);
-    padding: 7px 13px;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+
+    background:
+        rgba(0,0,0,0.4);
+
+    padding:
+        7px 13px;
+
     border-radius: 20px;
-    font-size: 13px;
 }
 
-/* ================= MOBILE ================= */
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer {
+
+    border-top:
+        1px solid var(--line);
+
+    padding:
+        45px 20px;
+
+    text-align: center;
+
+    color:
+        var(--muted);
+
+    font-size: 12px;
+}
+
+
+.footer-title {
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 24px;
+
+    color:
+        var(--brown);
+
+    margin-bottom: 8px;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 800px) {
+
+    .folders {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+}
+
 
 @media (max-width: 600px) {
 
     header {
-        padding: 20px 10px;
+
+        min-height: 78vh;
+
     }
 
-    header h1 {
-        font-size: 21px;
+
+    .hero h1 {
+
+        font-size: 64px;
+
     }
 
-    .container {
-        padding: 14px;
+
+    .hero-text {
+
+        font-size: 18px;
+
     }
+
+
+    .main {
+
+        padding:
+            55px 15px;
+
+    }
+
+
+    .stats {
+
+        gap: 30px;
+
+    }
+
 
     .folders {
-        grid-template-columns: repeat(2, 1fr);
+
+        grid-template-columns:
+            1fr 1fr;
+
         gap: 10px;
+
     }
+
 
     .folder {
-        padding: 15px;
-        border-radius: 11px;
+
+        min-height: 170px;
+
+        padding: 16px;
+
     }
+
 
     .folder-icon {
+
+        margin-bottom: 25px;
+
         font-size: 28px;
+
     }
+
 
     .folder-name {
-        font-size: 14px;
+
+        font-size: 23px;
+
     }
+
 
     .gallery {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
+
+        columns: 2 130px;
+
+        column-gap: 8px;
+
     }
+
 
     .memory {
-        border-radius: 8px;
+
+        margin-bottom: 8px;
+
     }
+
+
+    .upload-box {
+
+        padding: 20px 15px;
+
+    }
+
 
     .viewer-image {
+
         max-width: 94%;
+
         max-height: 82vh;
+
     }
+
 
     .nav-button {
+
         width: 40px;
+
         height: 40px;
+
         font-size: 23px;
-        background: rgba(255,255,255,0.12);
+
     }
+
 
     .previous {
+
         left: 8px;
+
     }
+
 
     .next {
+
         right: 8px;
+
     }
 
+
     .close-viewer {
-        top: 15px;
+
+        top: 13px;
+
         right: 17px;
-        font-size: 32px;
+
     }
+
 }
+
 </style>
+
 </head>
+
 
 <body>
 
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
 <header>
-    <h1>Our School Memories</h1>
-    <p>2025 – 2026</p>
-</header>
 
-<div class="container">
+    <div class="hero">
 
-    <!-- ================= FOLDER PAGE ================= -->
+        <div class="hero-small">
+            Our School
+        </div>
 
-    <section id="folderPage">
+        <h1>
+            Memories
+        </h1>
 
-        <div class="actions">
+        <div class="hero-year">
+            2025 — 2026
+        </div>
 
-            <button
-                class="primary-btn"
-                onclick="createFolder()">
-                + Create Folder
-            </button>
+        <div class="hero-line"></div>
+
+        <div class="hero-text">
+            The years pass,
+            but some moments deserve
+            to stay forever.
+        </div>
+
+        <div
+            class="explore-btn"
+            onclick="scrollToMemories()">
+
+            Explore our memories ↓
 
         </div>
 
-        <h2 class="page-title">
-            Memory Folders
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+    <!-- INTRO -->
+
+    <section class="intro"
+             id="memoriesSection">
+
+        <div class="eyebrow">
+            Our Story
+        </div>
+
+        <h2>
+            Moments we keep.
         </h2>
 
-        <div
-            id="folders"
-            class="folders">
+        <p>
+            A collection of the laughter,
+            friendships, celebrations,
+            journeys and little moments
+            that made our school years
+            unforgettable.
+        </p>
 
-            <div class="empty">
-                Loading folders...
+    </section>
+
+
+
+    <!-- STATS -->
+
+    <section class="stats">
+
+        <div class="stat">
+
+            <div
+                id="albumCount"
+                class="stat-number">
+                0
+            </div>
+
+            <div class="stat-label">
+                Albums
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div
+                id="memoryCount"
+                class="stat-number">
+                0
+            </div>
+
+            <div class="stat-label">
+                Memories
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-number">
+                ∞
+            </div>
+
+            <div class="stat-label">
+                Moments
             </div>
 
         </div>
@@ -393,31 +1278,80 @@ button:active {
     </section>
 
 
-    <!-- ================= MEMORY PAGE ================= -->
 
-    <section
-        id="memoryPage"
-        style="display:none;">
+    <!-- ALBUMS -->
 
-        <div class="actions">
+    <section>
+
+        <div class="section-header">
+
+            <h2 class="section-title">
+                The Albums
+            </h2>
 
             <button
-                class="primary-btn"
-                onclick="showFolders()">
-                ← Back to Folders
+                class="create-btn"
+                onclick="createFolder()">
+
+                + New Album
+
             </button>
 
         </div>
 
-        <h2
-            id="currentFolderName"
-            class="page-title">
-        </h2>
+
+        <div
+            id="folders"
+            class="folders">
+
+            <div class="empty">
+                Loading memories...
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- MEMORY PAGE -->
+
+    <section
+        id="memoryPage">
+
+
+        <button
+            class="back-btn"
+            onclick="showFolders()">
+
+            ← Back to Albums
+
+        </button>
+
+
+        <div class="memory-heading">
+
+            <div class="eyebrow">
+                Album
+            </div>
+
+            <h2
+                id="currentFolderName">
+            </h2>
+
+            <p>
+                Every picture tells a story.
+            </p>
+
+        </div>
+
+
+        <!-- UPLOAD -->
 
         <div class="upload-box">
 
             <h3>
-                📸 Upload a Memory
+                Add to the memories
             </h3>
 
             <input
@@ -428,11 +1362,16 @@ button:active {
                 multiple
             >
 
+            <br>
+
             <button
-                class="primary-btn"
+                class="upload-btn"
                 onclick="uploadPhotos()">
-                ⬆️ Upload Photos
+
+                Upload Photos
+
             </button>
+
 
             <div
                 id="status"
@@ -440,6 +1379,9 @@ button:active {
             </div>
 
         </div>
+
+
+        <!-- GALLERY -->
 
         <div
             id="gallery"
@@ -453,56 +1395,89 @@ button:active {
 
     </section>
 
-</div>
+
+</main>
 
 
-<!-- ================= FULLSCREEN VIEWER ================= -->
+
+<!-- =====================================================
+     VIEWER
+===================================================== -->
 
 <div
     id="viewer"
     class="viewer">
 
+
     <span
         class="close-viewer"
         onclick="closeViewer()">
+
         ×
+
     </span>
+
 
     <button
         id="previousButton"
         class="nav-button previous"
         onclick="previousPhoto()">
+
         ‹
+
     </button>
+
 
     <img
         id="viewerImage"
         class="viewer-image"
         src=""
-        alt="School memory"
-    >
+        alt="Memory">
+
 
     <button
         id="nextButton"
         class="nav-button next"
         onclick="nextPhoto()">
+
         ›
+
     </button>
+
 
     <div
         id="photoCounter"
         class="photo-counter">
+
         1 / 1
+
     </div>
 
 </div>
 
 
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <div class="footer-title">
+        Our School Memories
+    </div>
+
+    Made with memories • 2025–2026
+
+</footer>
+
+
+
 <script>
 
-/* =========================================================
+/* =====================================================
    SUPABASE
-========================================================= */
+===================================================== */
 
 const SUPABASE_URL =
 "https://swqfgyeqltyzeudeaepn.supabase.co";
@@ -517,9 +1492,9 @@ supabase.createClient(
 );
 
 
-/* =========================================================
+/* =====================================================
    GLOBAL VARIABLES
-========================================================= */
+===================================================== */
 
 let currentFolder = null;
 
@@ -528,9 +1503,24 @@ let currentMemories = [];
 let currentPhotoIndex = 0;
 
 
-/* =========================================================
+/* =====================================================
+   SCROLL TO MEMORIES
+===================================================== */
+
+function scrollToMemories() {
+
+    document
+        .getElementById("memoriesSection")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+/* =====================================================
    LOAD FOLDERS
-========================================================= */
+===================================================== */
 
 async function loadFolders() {
 
@@ -539,16 +1529,21 @@ async function loadFolders() {
 
     container.innerHTML =
         `<div class="empty">
-            Loading folders...
+            Loading memories...
         </div>`;
+
 
     const { data, error } =
         await supabaseClient
         .from("folders")
         .select("*")
-        .order("created_at", {
-            ascending: true
-        });
+        .order(
+            "created_at",
+            {
+                ascending: true
+            }
+        );
+
 
     if (error) {
 
@@ -556,49 +1551,140 @@ async function loadFolders() {
 
         container.innerHTML =
             `<div class="empty">
-                ❌ Unable to load folders.
+                Unable to load albums.
             </div>`;
 
         return;
     }
+
 
     if (!data || data.length === 0) {
 
         container.innerHTML =
             `<div class="empty">
-                📁 No folders yet.
+                No albums yet.
             </div>`;
 
         return;
     }
 
+
+    document
+        .getElementById("albumCount")
+        .textContent =
+        data.length;
+
+
+    container.innerHTML =
+        `<div class="empty">
+            Loading memories...
+        </div>`;
+
+
+    const { data, error } =
+        await supabaseClient
+        .from("folders")
+        .select("*")
+        .order(
+            "created_at",
+            {
+                ascending: true
+            }
+        );
+
+
+    if (error) {
+
+        console.error(error);
+
+        container.innerHTML =
+            `<div class="empty">
+                Unable to load albums.
+            </div>`;
+
+        return;
+    }
+
+
+    if (!data || data.length === 0) {
+
+        container.innerHTML =
+            `<div class="empty">
+                No albums yet.
+            </div>`;
+
+        return;
+    }
+
+
+    document
+        .getElementById("albumCount")
+        .textContent =
+        data.length;
+
+
     container.innerHTML = "";
 
-    for (const folder of data) {
+
+    let totalMemories = 0;
+
+
+    for (
+        let i = 0;
+        i < data.length;
+        i++
+    ) {
+
+        const folder =
+            data[i];
+
 
         const { count, error: countError } =
             await supabaseClient
             .from("memories")
-            .select("*", {
-                count: "exact",
-                head: true
-            })
-            .eq("folder_id", folder.id);
+            .select(
+                "*",
+                {
+                    count: "exact",
+                    head: true
+                }
+            )
+            .eq(
+                "folder_id",
+                folder.id
+            );
+
 
         if (countError) {
             console.error(countError);
         }
 
+
+        const memoryCount =
+            count || 0;
+
+
+        totalMemories +=
+            memoryCount;
+
+
         const card =
             document.createElement("div");
 
-        card.className = "folder";
 
-        card.onclick = function() {
-            openFolder(folder);
-        };
+        card.className =
+            "folder";
+
+
+        card.onclick =
+            () => openFolder(folder);
+
 
         card.innerHTML = `
+
+            <div class="folder-number">
+                ${String(i + 1).padStart(2, "0")}
+            </div>
 
             <div class="folder-icon">
                 ${folder.icon || "📁"}
@@ -609,134 +1695,219 @@ async function loadFolders() {
             </div>
 
             <div class="folder-count">
-                ${count || 0}
-                ${(count || 0) === 1 ? "memory" : "memories"}
+                ${memoryCount}
+                ${memoryCount === 1
+                    ? "memory"
+                    : "memories"}
             </div>
 
         `;
 
+
         container.appendChild(card);
+
     }
+
+
+    document
+        .getElementById("memoryCount")
+        .textContent =
+        totalMemories;
+
 }
 
 
-/* =========================================================
+/* =====================================================
    CREATE FOLDER
-========================================================= */
+===================================================== */
 
 async function createFolder() {
 
     const name =
-        prompt("Enter the folder name:");
+        prompt(
+            "Name your new album:"
+        );
 
-    if (!name || !name.trim()) {
+
+    if (
+        !name ||
+        !name.trim()
+    ) {
         return;
     }
+
 
     const { error } =
         await supabaseClient
         .from("folders")
         .insert({
-            name: name.trim(),
-            icon: "📁"
+
+            name:
+                name.trim(),
+
+            icon:
+                "📁"
+
         });
+
 
     if (error) {
 
         console.error(error);
 
         alert(
-            "Could not create folder.\n\n" +
+            "Could not create album.\n\n" +
             error.message
         );
 
         return;
     }
 
+
     await loadFolders();
 
-    alert("Folder created successfully!");
 }
 
 
-/* =========================================================
+/* =====================================================
    OPEN FOLDER
-========================================================= */
+===================================================== */
 
 async function openFolder(folder) {
 
-    currentFolder = folder;
+    currentFolder =
+        folder;
 
-    document.getElementById("folderPage")
-        .style.display = "none";
 
-    document.getElementById("memoryPage")
-        .style.display = "block";
+    document
+        .getElementById("memoryPage")
+        .style.display =
+        "block";
 
-    document.getElementById("currentFolderName")
+
+    document
+        .getElementById("memoriesSection")
+        .style.display =
+        "none";
+
+
+    document
+        .querySelector(".stats")
+        .style.display =
+        "none";
+
+
+    document
+        .querySelector(
+            ".section-header"
+        )
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById(
+            "currentFolderName"
+        )
         .textContent =
-        `${folder.icon || "📁"} ${folder.name}`;
+        folder.name;
+
 
     await loadMemories();
 
+
     window.scrollTo({
         top: 0,
         behavior: "smooth"
     });
+
 }
 
 
-/* =========================================================
+/* =====================================================
    BACK TO FOLDERS
-========================================================= */
+===================================================== */
 
 function showFolders() {
 
-    currentFolder = null;
+    currentFolder =
+        null;
 
-    currentMemories = [];
 
-    document.getElementById("memoryPage")
-        .style.display = "none";
+    currentMemories =
+        [];
 
-    document.getElementById("folderPage")
-        .style.display = "block";
+
+    document
+        .getElementById("memoryPage")
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById("memoriesSection")
+        .style.display =
+        "block";
+
+
+    document
+        .querySelector(".stats")
+        .style.display =
+        "flex";
+
+
+    document
+        .querySelector(
+            ".section-header"
+        )
+        .style.display =
+        "flex";
+
 
     loadFolders();
+
 
     window.scrollTo({
         top: 0,
         behavior: "smooth"
     });
+
 }
 
 
-/* =========================================================
+/* =====================================================
    LOAD MEMORIES
-========================================================= */
+===================================================== */
 
 async function loadMemories() {
 
     const gallery =
-        document.getElementById("gallery");
+        document.getElementById(
+            "gallery"
+        );
+
 
     gallery.innerHTML =
         `<div class="empty">
             Loading memories...
         </div>`;
 
-    if (!currentFolder) {
-        return;
-    }
 
     const { data, error } =
         await supabaseClient
         .from("memories")
         .select("*")
-        .eq("folder_id", currentFolder.id)
-        .order("created_at", {
-            ascending: false
-        });
+        .eq(
+            "folder_id",
+            currentFolder.id
+        )
+        .order(
+            "created_at",
+            {
+                ascending: false
+            }
+        );
+
 
     if (error) {
 
@@ -744,36 +1915,49 @@ async function loadMemories() {
 
         gallery.innerHTML =
             `<div class="empty">
-                ❌ Unable to load memories.
+                Unable to load memories.
             </div>`;
 
         return;
     }
+
 
     currentMemories =
         data || [];
 
-    if (currentMemories.length === 0) {
+
+    if (
+        currentMemories.length === 0
+    ) {
 
         gallery.innerHTML =
             `<div class="empty">
-                📸 No memories yet.
+                No memories yet.
                 <br><br>
-                Upload your first memory above.
+                Be the first to add one.
             </div>`;
 
         return;
     }
 
-    gallery.innerHTML = "";
+
+    gallery.innerHTML =
+        "";
+
 
     currentMemories.forEach(
         (memory, index) => {
 
-            const card =
-                document.createElement("div");
 
-            card.className = "memory";
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "memory";
+
 
             card.innerHTML = `
 
@@ -785,61 +1969,83 @@ async function loadMemories() {
 
             `;
 
-            card.onclick = function() {
-                openViewer(index);
-            };
+
+            card.onclick =
+                () => openViewer(index);
+
 
             gallery.appendChild(card);
+
         }
     );
+
 }
 
 
-/* =========================================================
-   UPLOAD PHOTOS
-========================================================= */
+/* =====================================================
+   UPLOAD
+===================================================== */
 
 async function uploadPhotos() {
 
     if (!currentFolder) {
 
-        alert("Please open a folder first.");
-
-        return;
-    }
-
-    const input =
-        document.getElementById("photoInput");
-
-    const files =
-        Array.from(input.files);
-
-    const status =
-        document.getElementById("status");
-
-    if (files.length === 0) {
-
         alert(
-            "Please select at least one photo."
+            "Please open an album first."
         );
 
         return;
     }
 
-    status.innerHTML =
-        "⏳ Preparing upload...";
+
+    const input =
+        document.getElementById(
+            "photoInput"
+        );
+
+
+    const files =
+        Array.from(
+            input.files
+        );
+
+
+    const status =
+        document.getElementById(
+            "status"
+        );
+
+
+    if (
+        files.length === 0
+    ) {
+
+        alert(
+            "Please choose at least one photo."
+        );
+
+        return;
+    }
+
 
     let uploaded = 0;
 
-    for (const file of files) {
+
+    for (
+        const file of files
+    ) {
+
 
         try {
 
-            status.innerHTML =
-                `⏳ Uploading ${uploaded + 1} of ${files.length}...`;
 
+            status.textContent =
+                `Uploading ${
+                    uploaded + 1
+                } of ${
+                    files.length
+                }...`;
 
-            /* Create unique filename */
 
             const cleanName =
                 file.name.replace(
@@ -847,18 +2053,23 @@ async function uploadPhotos() {
                     "_"
                 );
 
+
             const uniqueName =
-                `${Date.now()}-${Math.random()
-                .toString(36)
-                .substring(2)}-${cleanName}`;
+                `${Date.now()}-${
+                    Math.random()
+                    .toString(36)
+                    .substring(2)
+                }-${cleanName}`;
+
 
             const filePath =
                 `${currentFolder.id}/${uniqueName}`;
 
 
-            /* Upload to Supabase Storage */
-
-            const { error: uploadError } =
+            const {
+                error:
+                uploadError
+            } =
                 await supabaseClient
                 .storage
                 .from("memories")
@@ -866,31 +2077,44 @@ async function uploadPhotos() {
                     filePath,
                     file,
                     {
-                        cacheControl: "3600",
-                        upsert: false
+                        cacheControl:
+                            "3600",
+
+                        upsert:
+                            false
                     }
                 );
 
-            if (uploadError) {
+
+            if (
+                uploadError
+            ) {
+
                 throw uploadError;
+
             }
 
 
-            /* Get public URL */
-
-            const { data: publicData } =
+            const {
+                data:
+                publicData
+            } =
                 supabaseClient
                 .storage
                 .from("memories")
-                .getPublicUrl(filePath);
+                .getPublicUrl(
+                    filePath
+                );
+
 
             const publicURL =
                 publicData.publicUrl;
 
 
-            /* Save URL to database */
-
-            const { error: databaseError } =
+            const {
+                error:
+                databaseError
+            } =
                 await supabaseClient
                 .from("memories")
                 .insert({
@@ -900,271 +2124,388 @@ async function uploadPhotos() {
 
                     file_url:
                         publicURL
+
                 });
 
-            if (databaseError) {
+
+            if (
+                databaseError
+            ) {
+
                 throw databaseError;
+
             }
+
 
             uploaded++;
 
         }
 
+
         catch (error) {
 
-            console.error(error);
+            console.error(
+                error
+            );
 
-            status.innerHTML =
-                `❌ Upload failed: ${error.message}`;
+
+            status.textContent =
+                "Upload failed: " +
+                error.message;
+
 
             return;
+
         }
+
     }
+
 
     input.value = "";
 
-    status.innerHTML =
-        `✅ ${uploaded} photo${
-            uploaded === 1 ? "" : "s"
-        } uploaded successfully!`;
+
+    status.textContent =
+        `${uploaded} ${
+            uploaded === 1
+                ? "memory"
+                : "memories"
+        } added successfully.`;
+
 
     await loadMemories();
+
 }
 
 
-/* =========================================================
-   OPEN VIEWER
-========================================================= */
+/* =====================================================
+   VIEWER
+===================================================== */
 
 function openViewer(index) {
 
     if (
-        !currentMemories.length ||
-        index < 0 ||
-        index >= currentMemories.length
+        !currentMemories.length
     ) {
         return;
     }
 
-    currentPhotoIndex = index;
+
+    currentPhotoIndex =
+        index;
+
 
     updateViewer();
 
-    document.getElementById("viewer")
+
+    document
+        .getElementById("viewer")
         .classList.add("active");
 
-    document.body.style.overflow = "hidden";
+
+    document.body.style.overflow =
+        "hidden";
+
 }
 
-
-/* =========================================================
-   UPDATE VIEWER
-========================================================= */
 
 function updateViewer() {
 
-    if (!currentMemories.length) {
-        return;
-    }
-
     const memory =
-        currentMemories[currentPhotoIndex];
+        currentMemories[
+            currentPhotoIndex
+        ];
 
-    document.getElementById("viewerImage")
-        .src = memory.file_url;
 
-    document.getElementById("photoCounter")
+    document
+        .getElementById(
+            "viewerImage"
+        )
+        .src =
+        memory.file_url;
+
+
+    document
+        .getElementById(
+            "photoCounter"
+        )
         .textContent =
-        `${currentPhotoIndex + 1} / ${currentMemories.length}`;
+        `${currentPhotoIndex + 1}
+        /
+        ${currentMemories.length}`;
+
 
     const previous =
-        document.getElementById("previousButton");
+        document.getElementById(
+            "previousButton"
+        );
+
 
     const next =
-        document.getElementById("nextButton");
+        document.getElementById(
+            "nextButton"
+        );
 
-    if (currentMemories.length <= 1) {
 
-        previous.style.display = "none";
-        next.style.display = "none";
+    if (
+        currentMemories.length <= 1
+    ) {
+
+        previous.style.display =
+            "none";
+
+        next.style.display =
+            "none";
 
     } else {
 
-        previous.style.display = "flex";
-        next.style.display = "flex";
+        previous.style.display =
+            "flex";
+
+        next.style.display =
+            "flex";
+
     }
+
 }
 
 
-/* =========================================================
-   NEXT PHOTO
-========================================================= */
-
 function nextPhoto() {
 
-    if (currentMemories.length <= 1) {
+    if (
+        currentMemories.length <= 1
+    ) {
         return;
     }
 
+
     currentPhotoIndex++;
+
 
     if (
         currentPhotoIndex >=
         currentMemories.length
     ) {
-        currentPhotoIndex = 0;
+
+        currentPhotoIndex =
+            0;
+
     }
 
+
     updateViewer();
+
 }
 
-
-/* =========================================================
-   PREVIOUS PHOTO
-========================================================= */
 
 function previousPhoto() {
 
-    if (currentMemories.length <= 1) {
+    if (
+        currentMemories.length <= 1
+    ) {
         return;
     }
 
+
     currentPhotoIndex--;
 
-    if (currentPhotoIndex < 0) {
+
+    if (
+        currentPhotoIndex < 0
+    ) {
+
         currentPhotoIndex =
             currentMemories.length - 1;
+
     }
 
+
     updateViewer();
+
 }
 
-
-/* =========================================================
-   CLOSE VIEWER
-========================================================= */
 
 function closeViewer() {
 
-    document.getElementById("viewer")
+    document
+        .getElementById("viewer")
         .classList.remove("active");
 
-    document.getElementById("viewerImage")
-        .src = "";
 
-    document.body.style.overflow = "";
+    document
+        .getElementById("viewerImage")
+        .src =
+        "";
+
+
+    document.body.style.overflow =
+        "";
+
 }
 
 
-/* =========================================================
-   KEYBOARD CONTROLS
-========================================================= */
+/* =====================================================
+   KEYBOARD
+===================================================== */
 
 document.addEventListener(
     "keydown",
     function(event) {
 
-        const viewer =
-            document.getElementById("viewer");
 
-        if (!viewer.classList.contains("active")) {
+        const viewer =
+            document.getElementById(
+                "viewer"
+            );
+
+
+        if (
+            !viewer.classList.contains(
+                "active"
+            )
+        ) {
             return;
         }
 
-        if (event.key === "ArrowRight") {
+
+        if (
+            event.key ===
+            "ArrowRight"
+        ) {
+
             nextPhoto();
+
         }
 
-        if (event.key === "ArrowLeft") {
+
+        if (
+            event.key ===
+            "ArrowLeft"
+        ) {
+
             previousPhoto();
+
         }
 
-        if (event.key === "Escape") {
+
+        if (
+            event.key ===
+            "Escape"
+        ) {
+
             closeViewer();
+
         }
+
     }
 );
 
 
-/* =========================================================
-   MOBILE SWIPE
-========================================================= */
+/* =====================================================
+   SWIPE
+===================================================== */
 
 let touchStartX = 0;
+
 let touchEndX = 0;
 
+
 const viewer =
-    document.getElementById("viewer");
+    document.getElementById(
+        "viewer"
+    );
+
 
 viewer.addEventListener(
     "touchstart",
     function(event) {
 
         touchStartX =
-            event.changedTouches[0].screenX;
+            event.changedTouches[
+                0
+            ].screenX;
+
     },
-    { passive: true }
+    {
+        passive: true
+    }
 );
+
 
 viewer.addEventListener(
     "touchend",
     function(event) {
 
         touchEndX =
-            event.changedTouches[0].screenX;
+            event.changedTouches[
+                0
+            ].screenX;
 
-        handleSwipe();
+
+        const distance =
+            touchEndX -
+            touchStartX;
+
+
+        if (
+            Math.abs(distance) <
+            50
+        ) {
+            return;
+        }
+
+
+        if (
+            distance < 0
+        ) {
+
+            nextPhoto();
+
+        } else {
+
+            previousPhoto();
+
+        }
+
     },
-    { passive: true }
+    {
+        passive: true
+    }
 );
 
 
-function handleSwipe() {
-
-    const distance =
-        touchEndX - touchStartX;
-
-    const minimumSwipe =
-        50;
-
-    if (
-        Math.abs(distance) <
-        minimumSwipe
-    ) {
-        return;
-    }
-
-    if (distance < 0) {
-        nextPhoto();
-    } else {
-        previousPhoto();
-    }
-}
-
-
-/* =========================================================
+/* =====================================================
    ESCAPE HTML
-========================================================= */
+===================================================== */
 
 function escapeHTML(text) {
 
     const div =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     div.textContent =
         text;
 
+
     return div.innerHTML;
+
 }
 
 
-/* =========================================================
-   START APPLICATION
-========================================================= */
+/* =====================================================
+   START
+===================================================== */
 
 loadFolders();
 
 </script>
 
+
 </body>
+
 </html>
+
+
+   
