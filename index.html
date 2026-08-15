@@ -6,7 +6,6 @@
 
     <title>Our School Memories</title>
 
-    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
@@ -25,35 +24,35 @@
         header {
             background: #111;
             color: white;
-            padding: 40px 20px;
+            padding: 35px 20px;
             text-align: center;
         }
 
         header h1 {
-            font-size: 32px;
-            margin-bottom: 10px;
+            font-size: 30px;
+            margin-bottom: 8px;
         }
 
         header p {
-            color: #bbb;
+            color: #aaa;
         }
 
         .container {
             max-width: 1000px;
             margin: auto;
-            padding: 30px 20px;
+            padding: 25px 20px;
         }
 
         .actions {
             display: flex;
-            gap: 12px;
-            margin-bottom: 30px;
+            gap: 10px;
+            margin-bottom: 25px;
             flex-wrap: wrap;
         }
 
         button {
             border: none;
-            padding: 12px 20px;
+            padding: 12px 18px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 15px;
@@ -69,8 +68,14 @@
             border: 1px solid #ddd;
         }
 
-        h2 {
+        .back-btn {
+            background: #111;
+            color: white;
             margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-bottom: 18px;
         }
 
         .folders {
@@ -90,21 +95,48 @@
 
         .folder:hover {
             transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
         }
 
         .folder-icon {
             font-size: 35px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .folder-name {
             font-weight: bold;
+            font-size: 16px;
         }
 
         .folder-count {
             color: #888;
-            margin-top: 5px;
+            margin-top: 6px;
             font-size: 14px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .memory {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+
+        .memory img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .memory-info {
+            padding: 10px;
+            font-size: 13px;
         }
 
         .empty {
@@ -113,10 +145,14 @@
             color: #888;
         }
 
+        .hidden {
+            display: none;
+        }
+
         #status {
-            margin-top: 20px;
             text-align: center;
-            font-size: 14px;
+            margin-top: 15px;
+            color: #777;
         }
     </style>
 </head>
@@ -128,7 +164,10 @@
     <p>2025 — 2026</p>
 </header>
 
-<div class="container">
+
+<!-- HOME PAGE -->
+
+<div class="container" id="homePage">
 
     <div class="actions">
 
@@ -150,9 +189,31 @@
         </div>
     </div>
 
-    <div id="status"></div>
+</div>
+
+
+<!-- FOLDER PAGE -->
+
+<div class="container hidden" id="folderPage">
+
+    <button class="back-btn" onclick="showHome()">
+        ← Back to Folders
+    </button>
+
+    <h2 id="folderTitle">
+        Memories
+    </h2>
+
+    <div class="gallery" id="gallery">
+
+        <div class="empty">
+            Loading memories...
+        </div>
+
+    </div>
 
 </div>
+
 
 <script>
 
@@ -176,33 +237,40 @@
 
     async function loadFolders() {
 
+        const foldersContainer =
+            document.getElementById("folders");
+
+        foldersContainer.innerHTML =
+            "<div class='empty'>Loading folders...</div>";
+
         const { data, error } = await supabaseClient
             .from("folders")
             .select("*")
             .order("created_at", { ascending: true });
 
+
         if (error) {
 
             console.error(error);
 
-            document.getElementById("folders").innerHTML =
+            foldersContainer.innerHTML =
                 "<div class='empty'>Unable to load folders.</div>";
 
             return;
         }
 
-        const foldersContainer =
-            document.getElementById("folders");
 
         foldersContainer.innerHTML = "";
 
-        if (data.length === 0) {
+
+        if (!data || data.length === 0) {
 
             foldersContainer.innerHTML =
                 "<div class='empty'>No folders yet.</div>";
 
             return;
         }
+
 
         data.forEach(folder => {
 
@@ -211,7 +279,9 @@
 
             folderElement.className = "folder";
 
+
             folderElement.innerHTML = `
+
                 <div class="folder-icon">
                     ${folder.icon || "📁"}
                 </div>
@@ -221,13 +291,157 @@
                 </div>
 
                 <div class="folder-count">
-                    Open folder
+                    Open folder →
                 </div>
+
             `;
+
+
+            folderElement.onclick = function() {
+
+                openFolder(folder);
+
+            };
+
 
             foldersContainer.appendChild(folderElement);
 
         });
+
+    }
+
+
+    // ==========================================
+    // OPEN FOLDER
+    // ==========================================
+
+    async function openFolder(folder) {
+
+        document
+            .getElementById("homePage")
+            .classList.add("hidden");
+
+        document
+            .getElementById("folderPage")
+            .classList.remove("hidden");
+
+
+        document
+            .getElementById("folderTitle")
+            .textContent =
+            folder.icon + " " + folder.name;
+
+
+        const gallery =
+            document.getElementById("gallery");
+
+
+        gallery.innerHTML =
+            "<div class='empty'>Loading memories...</div>";
+
+
+        const { data, error } =
+            await supabaseClient
+
+                .from("memories")
+
+                .select("*")
+
+                .eq("folder_id", folder.id)
+
+                .order("created_at", {
+                    ascending: false
+                });
+
+
+        if (error) {
+
+            console.error(error);
+
+            gallery.innerHTML =
+                "<div class='empty'>Unable to load memories.</div>";
+
+            return;
+        }
+
+
+        gallery.innerHTML = "";
+
+
+        if (!data || data.length === 0) {
+
+            gallery.innerHTML = `
+
+                <div class="empty">
+
+                    <h3>No memories yet 📸</h3>
+
+                    <p>
+                        Memories uploaded to this folder
+                        will appear here.
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        data.forEach(memory => {
+
+            const memoryElement =
+                document.createElement("div");
+
+            memoryElement.className = "memory";
+
+
+            memoryElement.innerHTML = `
+
+                <img
+                    src="${memory.file_url}"
+                    alt="${memory.caption || "School memory"}"
+                >
+
+                <div class="memory-info">
+
+                    <strong>
+                        ${memory.caption || ""}
+                    </strong>
+
+                    <br>
+
+                    <span>
+                        ${memory.uploader_name || "Anonymous"}
+                    </span>
+
+                </div>
+
+            `;
+
+
+            gallery.appendChild(memoryElement);
+
+        });
+
+    }
+
+
+    // ==========================================
+    // BACK TO HOME
+    // ==========================================
+
+    function showHome() {
+
+        document
+            .getElementById("folderPage")
+            .classList.add("hidden");
+
+        document
+            .getElementById("homePage")
+            .classList.remove("hidden");
+
     }
 
 
@@ -242,26 +456,40 @@
 
         if (!name) return;
 
+
         const { error } =
             await supabaseClient
+
                 .from("folders")
+
                 .insert({
+
                     name: name,
+
                     icon: "📁"
+
                 });
+
 
         if (error) {
 
-            alert("Could not create folder.");
-
             console.error(error);
+
+            alert(
+                "Could not create folder."
+            );
 
             return;
         }
 
-        alert("Folder created successfully!");
+
+        alert(
+            "Folder created successfully!"
+        );
+
 
         loadFolders();
+
     }
 
 
@@ -272,14 +500,14 @@
     function uploadMemory() {
 
         alert(
-            "The upload system will be connected next."
+            "Photo upload will be added next."
         );
 
     }
 
 
     // ==========================================
-    // START APP
+    // START
     // ==========================================
 
     loadFolders();
