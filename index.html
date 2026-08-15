@@ -2,31 +2,44 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>Our School Memories</title>
+<title>Our School Memories • 2025–2026</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link rel="preconnect"
-href="https://fonts.gstatic.com"
-crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
-rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 
 <style>
 
-/* =====================================================
-   GLOBAL
-===================================================== */
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root {
+    --ink: #28231f;
+    --brown: #6d5140;
+    --brown-dark: #49362a;
+
+    --cream: #f5f0e7;
+    --paper: #fffdf8;
+
+    --muted: #887b70;
+    --line: #ddd3c6;
+
+    --shadow:
+        0 20px 60px rgba(55, 39, 28, .10);
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
 
 * {
     box-sizing: border-box;
@@ -37,57 +50,27 @@ html {
 }
 
 body {
-
     margin: 0;
-
-    background:
-        #f4efe5;
-
-    color: #332d27;
+    background: var(--cream);
+    color: var(--ink);
 
     font-family:
-        "Inter",
+        "DM Sans",
         sans-serif;
 }
 
 
-/* =====================================================
-   VARIABLES
-===================================================== */
+/* =========================================================
+   HERO
+========================================================= */
 
-:root {
-
-    --cream: #f4efe5;
-
-    --paper: #fbf8f1;
-
-    --brown: #634c3b;
-
-    --dark-brown: #392d25;
-
-    --muted: #8a7b6d;
-
-    --line: #ded4c5;
-
-    --soft: #ebe3d5;
-
-}
-
-
-/* =====================================================
-   HEADER
-===================================================== */
-
-header {
+.hero {
+    min-height: 88vh;
 
     position: relative;
 
-    min-height: 82vh;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
     text-align: center;
@@ -98,113 +81,137 @@ header {
 
     background:
         linear-gradient(
-            rgba(45,34,27,0.67),
-            rgba(45,34,27,0.72)
+            rgba(38, 30, 25, .63),
+            rgba(38, 30, 25, .74)
         ),
-        url("https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1800&q=85")
-        center/cover;
+        url("https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=2000&q=90")
+        center / cover;
 }
 
 
-/* subtle paper texture */
+/* moving light */
 
-header::after {
-
+.hero::before {
     content: "";
 
     position: absolute;
+    inset: -30%;
 
-    inset: 0;
-
-    opacity: 0.08;
-
-    background-image:
+    background:
         radial-gradient(
-            rgba(255,255,255,0.7) 1px,
-            transparent 1px
+            circle at 50% 45%,
+            rgba(255,255,255,.12),
+            transparent 35%
         );
 
-    background-size: 5px 5px;
+    animation: glow 8s ease-in-out infinite alternate;
 
     pointer-events: none;
 }
 
+@keyframes glow {
 
-.hero {
+    from {
+        transform: scale(1);
+        opacity: .5;
+    }
 
+    to {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+}
+
+
+/* =========================================================
+   HERO CONTENT
+========================================================= */
+
+.hero-content {
     position: relative;
-
     z-index: 2;
 
     max-width: 800px;
 
     color: white;
 
+    animation: heroIn 1.2s ease both;
+}
+
+@keyframes heroIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 
-.hero-small {
-
-    font-size: 12px;
+.eyebrow {
+    font-size: 11px;
 
     letter-spacing: 5px;
 
     text-transform: uppercase;
 
-    opacity: 0.85;
+    opacity: .8;
 
-    margin-bottom: 18px;
+    margin-bottom: 20px;
 }
 
 
 .hero h1 {
+
+    margin: 0;
 
     font-family:
         "Cormorant Garamond",
         serif;
 
     font-size:
-        clamp(58px, 11vw, 110px);
-
-    line-height: 0.82;
+        clamp(70px, 13vw, 130px);
 
     font-weight: 500;
 
-    margin: 0;
+    line-height: .8;
 
-    letter-spacing: -2px;
+    letter-spacing: -3px;
 }
 
 
-.hero-year {
+.year {
+
+    margin-top: 30px;
 
     font-family:
         "Cormorant Garamond",
         serif;
 
-    font-size: 25px;
+    font-size: 24px;
 
-    margin-top: 25px;
-
-    letter-spacing: 4px;
+    letter-spacing: 6px;
 }
 
 
 .hero-line {
 
     width: 70px;
-
     height: 1px;
 
-    background: rgba(255,255,255,0.7);
+    background: rgba(255,255,255,.7);
 
     margin: 28px auto;
 }
 
 
-.hero-text {
+.hero-description {
 
-    max-width: 500px;
+    max-width: 520px;
 
     margin: auto;
 
@@ -212,118 +219,112 @@ header::after {
         "Cormorant Garamond",
         serif;
 
-    font-size: 21px;
+    font-size: 22px;
 
     line-height: 1.5;
 
-    opacity: 0.9;
+    opacity: .9;
 }
 
 
-.explore-btn {
+/* =========================================================
+   EXPLORE BUTTON
+========================================================= */
 
-    display: inline-block;
+.explore {
 
     margin-top: 35px;
 
-    padding: 13px 27px;
+    padding: 13px 25px;
 
-    border: 1px solid rgba(255,255,255,0.7);
+    border:
+        1px solid rgba(255,255,255,.6);
 
-    border-radius: 30px;
+    border-radius: 40px;
+
+    background:
+        rgba(255,255,255,.08);
 
     color: white;
 
-    background:
-        rgba(255,255,255,0.08);
-
-    backdrop-filter:
-        blur(8px);
-
     cursor: pointer;
 
-    font-size: 13px;
+    font-size: 12px;
 
     letter-spacing: 1px;
 
-    transition: 0.3s;
+    transition: .3s;
 }
 
-
-.explore-btn:hover {
+.explore:hover {
 
     background: white;
 
-    color: var(--dark-brown);
+    color: var(--brown-dark);
 
+    transform: translateY(-3px);
 }
 
 
-/* =====================================================
+/* =========================================================
    MAIN
-===================================================== */
+========================================================= */
 
-.main {
+main {
 
-    max-width: 1200px;
+    max-width: 1250px;
 
     margin: auto;
 
-    padding:
-        80px 25px;
+    padding: 90px 25px;
 }
 
 
-/* =====================================================
+/* =========================================================
    INTRO
-===================================================== */
+========================================================= */
 
 .intro {
 
-    text-align: center;
-
-    max-width: 700px;
+    max-width: 720px;
 
     margin:
-        0 auto 70px;
+        0 auto 65px;
+
+    text-align: center;
 }
 
 
-.eyebrow {
+.intro .eyebrow {
 
     color: var(--brown);
 
-    text-transform: uppercase;
+    opacity: 1;
 
-    letter-spacing: 3px;
-
-    font-size: 11px;
-
-    font-weight: 600;
-
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 
 .intro h2 {
+
+    margin: 0;
 
     font-family:
         "Cormorant Garamond",
         serif;
 
     font-size:
-        clamp(38px, 6vw, 58px);
+        clamp(45px, 7vw, 70px);
 
     font-weight: 500;
 
-    margin:
-        0 0 15px;
-
-    color: var(--dark-brown);
+    line-height: .95;
 }
 
 
 .intro p {
+
+    margin-top: 22px;
 
     color: var(--muted);
 
@@ -333,9 +334,9 @@ header::after {
 }
 
 
-/* =====================================================
+/* =========================================================
    STATS
-===================================================== */
+========================================================= */
 
 .stats {
 
@@ -343,11 +344,9 @@ header::after {
 
     justify-content: center;
 
-    gap: 60px;
+    gap: 80px;
 
-    margin-bottom: 70px;
-
-    flex-wrap: wrap;
+    margin-bottom: 80px;
 }
 
 
@@ -363,7 +362,7 @@ header::after {
         "Cormorant Garamond",
         serif;
 
-    font-size: 42px;
+    font-size: 48px;
 
     color: var(--brown);
 
@@ -373,21 +372,21 @@ header::after {
 
 .stat-label {
 
-    margin-top: 7px;
+    margin-top: 8px;
 
-    color: var(--muted);
+    font-size: 10px;
 
-    font-size: 11px;
-
-    letter-spacing: 2px;
+    letter-spacing: 3px;
 
     text-transform: uppercase;
+
+    color: var(--muted);
 }
 
 
-/* =====================================================
+/* =========================================================
    SECTION HEADER
-===================================================== */
+========================================================= */
 
 .section-header {
 
@@ -397,63 +396,62 @@ header::after {
 
     justify-content: space-between;
 
-    margin-bottom: 25px;
+    gap: 15px;
 
     border-bottom:
         1px solid var(--line);
 
-    padding-bottom: 15px;
+    padding-bottom: 18px;
+
+    margin-bottom: 28px;
 }
 
 
 .section-title {
 
+    margin: 0;
+
     font-family:
         "Cormorant Garamond",
         serif;
 
-    font-size: 34px;
+    font-size: 38px;
 
     font-weight: 600;
-
-    color: var(--dark-brown);
-
-    margin: 0;
 }
 
 
-.create-btn {
+.new-album {
+
+    border: none;
 
     background: var(--brown);
 
     color: white;
 
-    border: none;
+    padding: 11px 17px;
 
-    padding: 10px 16px;
-
-    border-radius: 4px;
+    border-radius: 5px;
 
     cursor: pointer;
 
     font-size: 12px;
 
-    letter-spacing: 0.5px;
-
-    transition: 0.25s;
+    transition: .25s;
 }
 
 
-.create-btn:hover {
+.new-album:hover {
 
-    background: var(--dark-brown);
+    background: var(--brown-dark);
 
+    transform: translateY(-2px);
 }
 
 
-/* =====================================================
+/* =========================================================
    ALBUM GRID
-===================================================== */
+========================================================= */
 
 .folders {
 
@@ -463,8 +461,6 @@ header::after {
         repeat(3, 1fr);
 
     gap: 22px;
-
-    margin-bottom: 90px;
 }
 
 
@@ -472,65 +468,58 @@ header::after {
 
     position: relative;
 
-    min-height: 220px;
+    min-height: 240px;
 
     padding: 28px;
 
-    background:
-        var(--paper);
+    background: var(--paper);
 
     border:
         1px solid var(--line);
 
-    cursor: pointer;
-
     overflow: hidden;
 
+    cursor: pointer;
+
     transition:
-        transform 0.3s,
-        box-shadow 0.3s;
-}
-
-
-.folder::before {
-
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-
-    left: 0;
-
-    width: 100%;
-
-    height: 4px;
-
-    background:
-        var(--brown);
-
-    transform:
-        scaleX(0);
-
-    transform-origin:
-        left;
-
-    transition: 0.3s;
+        transform .35s,
+        box-shadow .35s;
 }
 
 
 .folder:hover {
 
     transform:
-        translateY(-6px);
+        translateY(-8px);
 
-    box-shadow:
-        0 15px 35px
-        rgba(70,50,35,0.12);
+    box-shadow: var(--shadow);
 }
 
 
-.folder:hover::before {
+.folder::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 4px;
+
+    background: var(--brown);
+
+    transform:
+        scaleX(0);
+
+    transform-origin: left;
+
+    transition: .35s;
+}
+
+
+.folder:hover::after {
 
     transform:
         scaleX(1);
@@ -542,15 +531,13 @@ header::after {
     position: absolute;
 
     top: 18px;
-
     right: 20px;
+
+    color: #c5b8aa;
 
     font-family:
         "Cormorant Garamond",
         serif;
-
-    color:
-        #c7bbaa;
 
     font-size: 22px;
 }
@@ -558,9 +545,9 @@ header::after {
 
 .folder-icon {
 
-    font-size: 35px;
+    font-size: 42px;
 
-    margin-bottom: 45px;
+    margin-bottom: 50px;
 }
 
 
@@ -570,134 +557,162 @@ header::after {
         "Cormorant Garamond",
         serif;
 
-    font-size: 30px;
+    font-size: 34px;
 
     font-weight: 600;
-
-    color:
-        var(--dark-brown);
 }
 
 
 .folder-count {
 
-    margin-top: 5px;
+    margin-top: 6px;
 
-    color:
-        var(--muted);
+    color: var(--muted);
 
     font-size: 11px;
 
-    text-transform: uppercase;
-
     letter-spacing: 1.5px;
+
+    text-transform: uppercase;
 }
 
 
-/* =====================================================
-   MEMORY PAGE
-===================================================== */
+/* =========================================================
+   EMPTY / LOADING
+========================================================= */
 
-#memoryPage {
+.empty {
+
+    grid-column: 1 / -1;
+
+    text-align: center;
+
+    padding: 80px 20px;
+
+    color: var(--muted);
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 24px;
+}
+
+
+/* =========================================================
+   ALBUM PAGE
+========================================================= */
+
+#albumPage {
 
     display: none;
 }
 
 
-.back-btn {
-
-    background:
-        transparent;
+.back {
 
     border:
         1px solid var(--line);
 
-    color:
-        var(--brown);
+    background: transparent;
 
-    padding:
-        9px 15px;
+    color: var(--brown);
 
-    border-radius: 3px;
+    padding: 10px 16px;
+
+    border-radius: 5px;
 
     cursor: pointer;
 
-    margin-bottom: 25px;
+    margin-bottom: 35px;
 
-    font-size: 12px;
+    transition: .25s;
 }
 
 
-.memory-heading {
+.back:hover {
+
+    background: var(--brown);
+
+    color: white;
+}
+
+
+.album-title {
 
     text-align: center;
 
-    margin-bottom: 40px;
+    margin-bottom: 45px;
 }
 
 
-.memory-heading h2 {
+.album-title .eyebrow {
+
+    color: var(--brown);
+
+    opacity: 1;
+
+    margin-bottom: 10px;
+}
+
+
+.album-title h2 {
+
+    margin: 0;
 
     font-family:
         "Cormorant Garamond",
         serif;
 
     font-size:
-        clamp(45px, 7vw, 65px);
+        clamp(50px, 8vw, 80px);
 
     font-weight: 500;
-
-    margin: 0;
-
-    color:
-        var(--dark-brown);
 }
 
 
-.memory-heading p {
+.album-title p {
 
-    color:
-        var(--muted);
+    color: var(--muted);
 
     margin-top: 8px;
 }
 
 
-/* =====================================================
-   UPLOAD BOX
-===================================================== */
+/* =========================================================
+   UPLOAD
+========================================================= */
 
 .upload-box {
 
-    max-width: 700px;
-
-    margin:
-        0 auto 50px;
-
-    padding: 28px;
-
-    background:
-        var(--paper);
+    background: var(--paper);
 
     border:
         1px solid var(--line);
 
+    padding: 30px;
+
+    max-width: 800px;
+
+    margin:
+        0 auto 50px;
+
     text-align: center;
+
+    box-shadow:
+        0 10px 40px rgba(50,35,25,.05);
 }
 
 
 .upload-box h3 {
 
+    margin-top: 0;
+
     font-family:
         "Cormorant Garamond",
         serif;
 
-    font-size: 27px;
-
-    font-weight: 600;
-
-    margin:
-        0 0 18px;
+    font-size: 30px;
 }
 
 
@@ -705,71 +720,86 @@ header::after {
 
     width: 100%;
 
-    margin-bottom: 15px;
+    margin:
+        15px 0 20px;
 
-    font-size: 12px;
+    font-size: 13px;
 }
 
 
-.upload-btn {
-
-    background:
-        var(--brown);
-
-    color:
-        white;
+.upload-button {
 
     border: none;
 
-    padding:
-        11px 20px;
+    background: var(--brown);
 
-    border-radius: 3px;
+    color: white;
+
+    padding: 12px 20px;
+
+    border-radius: 5px;
 
     cursor: pointer;
 
     font-size: 12px;
+
+    transition: .25s;
+}
+
+
+.upload-button:hover {
+
+    background: var(--brown-dark);
+}
+
+
+.upload-button:disabled {
+
+    opacity: .5;
+
+    cursor: wait;
 }
 
 
 .status {
 
-    margin-top: 12px;
+    min-height: 20px;
 
-    color:
-        var(--muted);
+    margin-top: 15px;
+
+    color: var(--muted);
 
     font-size: 12px;
 }
 
 
-/* =====================================================
-   MASONRY GALLERY
-===================================================== */
+/* =========================================================
+   GALLERY
+========================================================= */
 
 .gallery {
 
     columns: 4 220px;
 
-    column-gap: 15px;
+    column-gap: 16px;
 }
 
 
 .memory {
 
-    break-inside:
-        avoid;
-
-    margin-bottom: 15px;
-
     position: relative;
+
+    break-inside: avoid;
+
+    margin-bottom: 16px;
 
     overflow: hidden;
 
+    background: var(--paper);
+
     cursor: pointer;
 
-    background:
-        var(--paper);
+    border-radius: 3px;
 }
 
 
@@ -782,46 +812,22 @@ header::after {
     height: auto;
 
     transition:
-        transform 0.5s ease;
-
+        transform .5s ease;
 }
 
 
 .memory:hover img {
 
     transform:
-        scale(1.035);
+        scale(1.045);
 }
 
 
-/* =====================================================
-   EMPTY
-===================================================== */
-
-.empty {
-
-    text-align: center;
-
-    padding: 60px 20px;
-
-    color:
-        var(--muted);
-
-    font-family:
-        "Cormorant Garamond",
-        serif;
-
-    font-size: 22px;
-}
-
-
-/* =====================================================
+/* =========================================================
    VIEWER
-===================================================== */
+========================================================= */
 
 .viewer {
-
-    display: none;
 
     position: fixed;
 
@@ -829,14 +835,14 @@ header::after {
 
     z-index: 9999;
 
-    background:
-        rgba(35,27,22,0.97);
+    display: none;
 
     align-items: center;
 
     justify-content: center;
 
-    touch-action: pan-y;
+    background:
+        rgba(18,15,13,.97);
 }
 
 
@@ -850,22 +856,36 @@ header::after {
 
     max-width: 88%;
 
-    max-height: 85vh;
+    max-height: 84vh;
 
     object-fit: contain;
 
     user-select: none;
 
-    border-radius: 2px;
+    animation:
+        photoIn .3s ease;
 }
 
 
-.close-viewer {
+@keyframes photoIn {
+
+    from {
+        opacity: 0;
+        transform: scale(.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+.close {
 
     position: absolute;
 
     top: 20px;
-
     right: 25px;
 
     color: white;
@@ -874,11 +894,11 @@ header::after {
 
     cursor: pointer;
 
-    z-index: 3;
+    z-index: 2;
 }
 
 
-.nav-button {
+.nav {
 
     position: absolute;
 
@@ -887,36 +907,38 @@ header::after {
     transform:
         translateY(-50%);
 
-    width: 48px;
-
-    height: 48px;
+    width: 50px;
+    height: 50px;
 
     border-radius: 50%;
 
     border:
-        1px solid
-        rgba(255,255,255,0.25);
+        1px solid rgba(255,255,255,.25);
 
     background:
-        rgba(255,255,255,0.08);
+        rgba(255,255,255,.08);
 
     color: white;
 
     font-size: 30px;
 
+    cursor: pointer;
+
     display: flex;
 
     align-items: center;
-
     justify-content: center;
-
-    cursor: pointer;
-
-    z-index: 3;
 }
 
 
-.previous {
+.nav:hover {
+
+    background:
+        rgba(255,255,255,.18);
+}
+
+
+.prev {
 
     left: 25px;
 }
@@ -928,12 +950,11 @@ header::after {
 }
 
 
-.photo-counter {
+.counter {
 
     position: absolute;
 
     bottom: 25px;
-
     left: 50%;
 
     transform:
@@ -941,36 +962,33 @@ header::after {
 
     color: white;
 
+    background:
+        rgba(0,0,0,.4);
+
+    padding: 7px 14px;
+
+    border-radius: 20px;
+
     font-size: 12px;
 
     letter-spacing: 2px;
-
-    background:
-        rgba(0,0,0,0.4);
-
-    padding:
-        7px 13px;
-
-    border-radius: 20px;
 }
 
 
-/* =====================================================
+/* =========================================================
    FOOTER
-===================================================== */
+========================================================= */
 
 footer {
 
     border-top:
         1px solid var(--line);
 
-    padding:
-        45px 20px;
-
     text-align: center;
 
-    color:
-        var(--muted);
+    padding: 50px 20px;
+
+    color: var(--muted);
 
     font-size: 12px;
 }
@@ -982,173 +1000,137 @@ footer {
         "Cormorant Garamond",
         serif;
 
-    font-size: 24px;
+    color: var(--brown);
 
-    color:
-        var(--brown);
+    font-size: 27px;
 
     margin-bottom: 8px;
 }
 
 
-/* =====================================================
+/* =========================================================
    MOBILE
-===================================================== */
+========================================================= */
 
-@media (max-width: 800px) {
+@media(max-width: 800px) {
 
     .folders {
 
         grid-template-columns:
             repeat(2, 1fr);
+    }
 
+    .gallery {
+
+        columns: 2 140px;
     }
 
 }
 
 
-@media (max-width: 600px) {
+@media(max-width: 600px) {
 
-    header {
+    .hero {
 
         min-height: 78vh;
-
     }
-
 
     .hero h1 {
 
-        font-size: 64px;
+        font-size: 72px;
 
+        letter-spacing: -2px;
     }
 
+    .hero-description {
 
-    .hero-text {
-
-        font-size: 18px;
-
+        font-size: 19px;
     }
 
-
-    .main {
+    main {
 
         padding:
-            55px 15px;
-
+            60px 15px;
     }
-
 
     .stats {
 
-        gap: 30px;
-
+        gap: 35px;
     }
 
+    .stat-number {
 
-    .folders {
-
-        grid-template-columns:
-            1fr 1fr;
-
-        gap: 10px;
-
+        font-size: 40px;
     }
 
+    .section-title {
+
+        font-size: 32px;
+    }
+
+    .new-album {
+
+        padding:
+            9px 12px;
+    }
 
     .folder {
 
-        min-height: 170px;
+        min-height: 185px;
 
-        padding: 16px;
-
+        padding: 17px;
     }
-
 
     .folder-icon {
 
-        margin-bottom: 25px;
+        font-size: 30px;
 
-        font-size: 28px;
-
+        margin-bottom: 30px;
     }
-
 
     .folder-name {
 
-        font-size: 23px;
-
+        font-size: 25px;
     }
-
-
-    .gallery {
-
-        columns: 2 130px;
-
-        column-gap: 8px;
-
-    }
-
-
-    .memory {
-
-        margin-bottom: 8px;
-
-    }
-
 
     .upload-box {
 
-        padding: 20px 15px;
-
+        padding: 22px 15px;
     }
-
 
     .viewer-image {
 
         max-width: 94%;
 
-        max-height: 82vh;
-
+        max-height: 80vh;
     }
 
+    .nav {
 
-    .nav-button {
+        width: 42px;
+        height: 42px;
 
-        width: 40px;
-
-        height: 40px;
-
-        font-size: 23px;
-
+        font-size: 25px;
     }
 
-
-    .previous {
+    .prev {
 
         left: 8px;
-
     }
-
 
     .next {
 
         right: 8px;
-
     }
 
+    .close {
 
-    .close-viewer {
-
-        top: 13px;
-
-        right: 17px;
-
+        top: 10px;
+        right: 16px;
     }
-
 }
 
 </style>
-
 </head>
 
 
@@ -1159,11 +1141,11 @@ footer {
      HERO
 ===================================================== -->
 
-<header>
+<header class="hero">
 
-    <div class="hero">
+    <div class="hero-content">
 
-        <div class="hero-small">
+        <div class="eyebrow">
             Our School
         </div>
 
@@ -1171,43 +1153,48 @@ footer {
             Memories
         </h1>
 
-        <div class="hero-year">
+        <div class="year">
             2025 — 2026
         </div>
 
         <div class="hero-line"></div>
 
-        <div class="hero-text">
+        <div class="hero-description">
             The years pass,
             but some moments deserve
             to stay forever.
         </div>
 
-        <div
-            class="explore-btn"
-            onclick="scrollToMemories()">
+        <button
+            class="explore"
+            onclick="scrollToAlbums()">
 
             Explore our memories ↓
 
-        </div>
+        </button>
 
     </div>
 
 </header>
 
 
-
 <!-- =====================================================
      MAIN
 ===================================================== -->
 
-<main class="main">
+<main>
 
 
-    <!-- INTRO -->
+<!-- =====================================================
+     HOME
+===================================================== -->
 
-    <section class="intro"
-             id="memoriesSection">
+<div id="homePage">
+
+
+    <section
+        class="intro"
+        id="albumsSection">
 
         <div class="eyebrow">
             Our Story
@@ -1218,7 +1205,7 @@ footer {
         </h2>
 
         <p>
-            A collection of the laughter,
+            A collection of laughter,
             friendships, celebrations,
             journeys and little moments
             that made our school years
@@ -1226,7 +1213,6 @@ footer {
         </p>
 
     </section>
-
 
 
     <!-- STATS -->
@@ -1238,7 +1224,9 @@ footer {
             <div
                 id="albumCount"
                 class="stat-number">
+
                 0
+
             </div>
 
             <div class="stat-label">
@@ -1253,7 +1241,9 @@ footer {
             <div
                 id="memoryCount"
                 class="stat-number">
+
                 0
+
             </div>
 
             <div class="stat-label">
@@ -1278,7 +1268,6 @@ footer {
     </section>
 
 
-
     <!-- ALBUMS -->
 
     <section>
@@ -1290,8 +1279,8 @@ footer {
             </h2>
 
             <button
-                class="create-btn"
-                onclick="createFolder()">
+                class="new-album"
+                onclick="createAlbum()">
 
                 + New Album
 
@@ -1305,99 +1294,98 @@ footer {
             class="folders">
 
             <div class="empty">
-                Loading memories...
+                Loading albums...
             </div>
 
         </div>
 
     </section>
 
+</div>
 
 
-    <!-- MEMORY PAGE -->
+<!-- =====================================================
+     ALBUM PAGE
+===================================================== -->
 
-    <section
-        id="memoryPage">
+<section id="albumPage">
 
+
+    <button
+        class="back"
+        onclick="goHome()">
+
+        ← Back to Albums
+
+    </button>
+
+
+    <div class="album-title">
+
+        <div class="eyebrow">
+            Album
+        </div>
+
+        <h2 id="albumName">
+        </h2>
+
+        <p>
+            Every picture tells a story.
+        </p>
+
+    </div>
+
+
+    <!-- UPLOAD -->
+
+    <div class="upload-box">
+
+        <h3>
+            Add to the memories
+        </h3>
+
+        <input
+            id="photoInput"
+            class="file-input"
+            type="file"
+            accept="image/*"
+            multiple
+        >
 
         <button
-            class="back-btn"
-            onclick="showFolders()">
+            id="uploadButton"
+            class="upload-button"
+            onclick="uploadPhotos()">
 
-            ← Back to Albums
+            Upload Photos
 
         </button>
 
-
-        <div class="memory-heading">
-
-            <div class="eyebrow">
-                Album
-            </div>
-
-            <h2
-                id="currentFolderName">
-            </h2>
-
-            <p>
-                Every picture tells a story.
-            </p>
-
-        </div>
-
-
-        <!-- UPLOAD -->
-
-        <div class="upload-box">
-
-            <h3>
-                Add to the memories
-            </h3>
-
-            <input
-                id="photoInput"
-                class="file-input"
-                type="file"
-                accept="image/*"
-                multiple
-            >
-
-            <br>
-
-            <button
-                class="upload-btn"
-                onclick="uploadPhotos()">
-
-                Upload Photos
-
-            </button>
-
-
-            <div
-                id="status"
-                class="status">
-            </div>
-
-        </div>
-
-
-        <!-- GALLERY -->
-
         <div
-            id="gallery"
-            class="gallery">
-
-            <div class="empty">
-                Loading memories...
-            </div>
-
+            id="status"
+            class="status">
         </div>
 
-    </section>
+    </div>
+
+
+    <!-- GALLERY -->
+
+    <div
+        id="gallery"
+        class="gallery">
+
+        <div class="empty">
+            Loading memories...
+        </div>
+
+    </div>
+
+
+</section>
 
 
 </main>
-
 
 
 <!-- =====================================================
@@ -1408,19 +1396,18 @@ footer {
     id="viewer"
     class="viewer">
 
-
-    <span
-        class="close-viewer"
+    <div
+        class="close"
         onclick="closeViewer()">
 
         ×
 
-    </span>
+    </div>
 
 
     <button
-        id="previousButton"
-        class="nav-button previous"
+        id="prevButton"
+        class="nav prev"
         onclick="previousPhoto()">
 
         ‹
@@ -1432,12 +1419,13 @@ footer {
         id="viewerImage"
         class="viewer-image"
         src=""
-        alt="Memory">
+        alt="School memory"
+    >
 
 
     <button
         id="nextButton"
-        class="nav-button next"
+        class="nav next"
         onclick="nextPhoto()">
 
         ›
@@ -1446,15 +1434,14 @@ footer {
 
 
     <div
-        id="photoCounter"
-        class="photo-counter">
+        id="counter"
+        class="counter">
 
         1 / 1
 
     </div>
 
 </div>
-
 
 
 <!-- =====================================================
@@ -1472,45 +1459,61 @@ footer {
 </footer>
 
 
-
 <script>
 
-/* =====================================================
-   SUPABASE
-===================================================== */
+/* =========================================================
+   SUPABASE CONNECTION
+========================================================= */
 
 const SUPABASE_URL =
-"https://swqfgyeqltyzeudeaepn.supabase.co";
+    "https://swqfgyeqltyzeudeaepn.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_IFCmPqb8d-CFUVZ8KMr4Iw_eV1QbvsD";
+    "sb_publishable_IFCmPqb8d-CFUVZ8KMr4Iw_eV1QbvsD";
+
 
 const supabaseClient =
-supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
 
-/* =====================================================
+/* =========================================================
    GLOBAL VARIABLES
-===================================================== */
+========================================================= */
 
-let currentFolder = null;
+let currentAlbum = null;
 
 let currentMemories = [];
 
 let currentPhotoIndex = 0;
 
 
-/* =====================================================
-   SCROLL TO MEMORIES
-===================================================== */
+/* =========================================================
+   SAFE HTML
+========================================================= */
 
-function scrollToMemories() {
+function escapeHTML(value) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        value ?? "";
+
+    return div.innerHTML;
+}
+
+
+/* =========================================================
+   SCROLL
+========================================================= */
+
+function scrollToAlbums() {
 
     document
-        .getElementById("memoriesSection")
+        .getElementById("albumsSection")
         .scrollIntoView({
             behavior: "smooth"
         });
@@ -1518,288 +1521,192 @@ function scrollToMemories() {
 }
 
 
-/* =====================================================
-   LOAD FOLDERS
-===================================================== */
+/* =========================================================
+   LOAD ALBUMS
+========================================================= */
 
-async function loadFolders() {
+async function loadAlbums() {
 
     const container =
         document.getElementById("folders");
 
-    container.innerHTML =
-        `<div class="empty">
-            Loading memories...
-        </div>`;
-
-
-    const { data, error } =
-        await supabaseClient
-        .from("folders")
-        .select("*")
-        .order(
-            "created_at",
-            {
-                ascending: true
-            }
-        );
-
-
-    if (error) {
-
-        console.error(error);
-
-        container.innerHTML =
-            `<div class="empty">
-                Unable to load albums.
-            </div>`;
-
-        return;
-    }
-
-
-    if (!data || data.length === 0) {
-
-        container.innerHTML =
-            `<div class="empty">
-                No albums yet.
-            </div>`;
-
-        return;
-    }
-
-
-    document
-        .getElementById("albumCount")
-        .textContent =
-        data.length;
-
-
-    container.innerHTML =
-        `<div class="empty">
-            Loading memories...
-        </div>`;
-
-
-    const { data, error } =
-        await supabaseClient
-        .from("folders")
-        .select("*")
-        .order(
-            "created_at",
-            {
-                ascending: true
-            }
-        );
-
-
-    if (error) {
-
-        console.error(error);
-
-        container.innerHTML =
-            `<div class="empty">
-                Unable to load albums.
-            </div>`;
-
-        return;
-    }
-
-
-    if (!data || data.length === 0) {
-
-        container.innerHTML =
-            `<div class="empty">
-                No albums yet.
-            </div>`;
-
-        return;
-    }
-
-
-    document
-        .getElementById("albumCount")
-        .textContent =
-        data.length;
-
-
-    container.innerHTML = "";
-
-
-    let totalMemories = 0;
-
-
-    for (
-        let i = 0;
-        i < data.length;
-        i++
-    ) {
-
-        const folder =
-            data[i];
-
-
-        const { count, error: countError } =
-            await supabaseClient
-            .from("memories")
-            .select(
-                "*",
-                {
-                    count: "exact",
-                    head: true
-                }
-            )
-            .eq(
-                "folder_id",
-                folder.id
-            );
-
-
-        if (countError) {
-            console.error(countError);
-        }
-
-
-        const memoryCount =
-            count || 0;
-
-
-        totalMemories +=
-            memoryCount;
-
-
-        const card =
-            document.createElement("div");
-
-
-        card.className =
-            "folder";
-
-async function loadFolders() {
-
-    const container = document.getElementById("folders");
 
     container.innerHTML = `
         <div class="empty">
-            Connecting to memories...
+            Loading albums...
         </div>
     `;
 
+
     try {
 
-        console.log("Connecting to Supabase...");
-        console.log("URL:", SUPABASE_URL);
+        const result =
+            await supabaseClient
+                .from("folders")
+                .select("*")
+                .order(
+                    "created_at",
+                    {
+                        ascending: true
+                    }
+                );
 
-        const { data, error } = await supabaseClient
-            .from("folders")
-            .select("*");
 
-        console.log("Folders:", data);
-        console.log("Error:", error);
+        const data =
+            result.data;
+
+        const error =
+            result.error;
+
 
         if (error) {
+
             throw error;
+
         }
 
-        if (!data || data.length === 0) {
+
+        const albums =
+            data || [];
+
+
+        document
+            .getElementById("albumCount")
+            .textContent =
+            albums.length;
+
+
+        /* =========================================
+           MEMORY COUNT
+        ========================================= */
+
+        const memoryResult =
+            await supabaseClient
+                .from("memories")
+                .select(
+                    "*",
+                    {
+                        count: "exact",
+                        head: true
+                    }
+                );
+
+
+        if (memoryResult.error) {
+
+            console.error(
+                memoryResult.error
+            );
+
+            document
+                .getElementById(
+                    "memoryCount"
+                )
+                .textContent = "0";
+
+        } else {
+
+            document
+                .getElementById(
+                    "memoryCount"
+                )
+                .textContent =
+                memoryResult.count || 0;
+
+        }
+
+
+        /* =========================================
+           NO ALBUMS
+        ========================================= */
+
+        if (albums.length === 0) {
 
             container.innerHTML = `
                 <div class="empty">
-                    No albums found.
+                    No albums yet.
                     <br><br>
                     Create your first album.
                 </div>
             `;
 
-            document.getElementById("albumCount").textContent = "0";
-            document.getElementById("memoryCount").textContent = "0";
-
             return;
+
         }
 
-        document.getElementById("albumCount").textContent =
-            data.length;
+
+        /* =========================================
+           CREATE CARDS
+        ========================================= */
 
         container.innerHTML = "";
 
-        let totalMemories = 0;
 
-        data.forEach((folder, index) => {
+        albums.forEach(
+            (album, index) => {
 
-            const card = document.createElement("div");
+                const card =
+                    document.createElement(
+                        "div"
+                    );
 
-            card.className = "folder";
 
-            card.onclick = () => openFolder(folder);
+                card.className =
+                    "folder";
 
-            card.innerHTML = `
-                <div class="folder-number">
-                    ${String(index + 1).padStart(2, "0")}
-                </div>
 
-                <div class="folder-icon">
-                    ${folder.icon || "📁"}
-                </div>
+                card.onclick =
+                    () => openAlbum(album);
 
-                <div class="folder-name">
-                    ${escapeHTML(folder.name || "Untitled")}
-                </div>
 
-                <div class="folder-count">
-                    Open album
-                </div>
-            `;
+                card.innerHTML = `
 
-            container.appendChild(card);
+                    <div class="folder-number">
+                        ${String(index + 1).padStart(2, "0")}
+                    </div>
 
-        });
+                    <div class="folder-icon">
+                        ${escapeHTML(
+                            album.icon || "📁"
+                        )}
+                    </div>
 
-        /*
-         * Count memories separately.
-         * If this fails, the albums will still work.
-         */
+                    <div class="folder-name">
+                        ${escapeHTML(
+                            album.name ||
+                            "Untitled"
+                        )}
+                    </div>
 
-        const { count, error: memoryError } =
-            await supabaseClient
-                .from("memories")
-                .select("*", {
-                    count: "exact",
-                    head: true
-                });
+                    <div class="folder-count">
+                        Open album →
+                    </div>
 
-        if (memoryError) {
+                `;
 
-            console.error(
-                "Memory count error:",
-                memoryError
-            );
 
-            document.getElementById(
-                "memoryCount"
-            ).textContent = "?";
+                container.appendChild(
+                    card
+                );
 
-        } else {
+            }
+        );
 
-            totalMemories = count || 0;
-
-            document.getElementById(
-                "memoryCount"
-            ).textContent = totalMemories;
-
-        }
 
     } catch (error) {
 
         console.error(
-            "SUPABASE ERROR:",
+            "Album loading error:",
             error
         );
 
+
         container.innerHTML = `
+
             <div class="empty">
 
                 <strong>
-                    Could not load albums.
+                    Unable to load albums.
                 </strong>
 
                 <br><br>
@@ -1809,29 +1716,24 @@ async function loadFolders() {
                     String(error)
                 )}
 
-                <br><br>
-
-                <small>
-                    Check your Supabase connection
-                    and table permissions.
-                </small>
-
             </div>
+
         `;
 
     }
 
-               }
+}
 
-/* =====================================================
-   CREATE FOLDER
-===================================================== */
 
-async function createFolder() {
+/* =========================================================
+   CREATE ALBUM
+========================================================= */
+
+async function createAlbum() {
 
     const name =
         prompt(
-            "Name your new album:"
+            "Enter the album name:"
         );
 
 
@@ -1839,87 +1741,85 @@ async function createFolder() {
         !name ||
         !name.trim()
     ) {
+
         return;
+
     }
 
 
-    const { error } =
-        await supabaseClient
-        .from("folders")
-        .insert({
+    try {
 
-            name:
-                name.trim(),
+        const { error } =
+            await supabaseClient
+                .from("folders")
+                .insert({
 
-            icon:
-                "📁"
+                    name:
+                        name.trim(),
 
-        });
+                    icon:
+                        "📁"
+
+                });
 
 
-    if (error) {
+        if (error) {
+
+            throw error;
+
+        }
+
+
+        await loadAlbums();
+
+
+    } catch (error) {
 
         console.error(error);
+
 
         alert(
             "Could not create album.\n\n" +
             error.message
         );
 
-        return;
     }
-
-
-    await loadFolders();
 
 }
 
 
-/* =====================================================
-   OPEN FOLDER
-===================================================== */
+/* =========================================================
+   OPEN ALBUM
+========================================================= */
 
-async function openFolder(folder) {
+async function openAlbum(album) {
 
-    currentFolder =
-        folder;
+    currentAlbum =
+        album;
 
 
     document
-        .getElementById("memoryPage")
+        .getElementById("homePage")
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById("albumPage")
         .style.display =
         "block";
 
 
     document
-        .getElementById("memoriesSection")
-        .style.display =
-        "none";
-
-
-    document
-        .querySelector(".stats")
-        .style.display =
-        "none";
-
-
-    document
-        .querySelector(
-            ".section-header"
-        )
-        .style.display =
-        "none";
-
-
-    document
-        .getElementById(
-            "currentFolderName"
-        )
+        .getElementById("albumName")
         .textContent =
-        folder.name;
+        album.name;
 
 
-    await loadMemories();
+    document
+        .getElementById("status")
+        .textContent =
+        "";
 
 
     window.scrollTo({
@@ -1927,50 +1827,35 @@ async function openFolder(folder) {
         behavior: "smooth"
     });
 
+
+    await loadMemories();
+
 }
 
 
-/* =====================================================
-   BACK TO FOLDERS
-===================================================== */
+/* =========================================================
+   GO HOME
+========================================================= */
 
-function showFolders() {
+function goHome() {
 
-    currentFolder =
+    currentAlbum =
         null;
-
 
     currentMemories =
         [];
 
 
     document
-        .getElementById("memoryPage")
+        .getElementById("albumPage")
         .style.display =
         "none";
 
 
     document
-        .getElementById("memoriesSection")
+        .getElementById("homePage")
         .style.display =
         "block";
-
-
-    document
-        .querySelector(".stats")
-        .style.display =
-        "flex";
-
-
-    document
-        .querySelector(
-            ".section-header"
-        )
-        .style.display =
-        "flex";
-
-
-    loadFolders();
 
 
     window.scrollTo({
@@ -1978,12 +1863,15 @@ function showFolders() {
         behavior: "smooth"
     });
 
+
+    loadAlbums();
+
 }
 
 
-/* =====================================================
+/* =========================================================
    LOAD MEMORIES
-===================================================== */
+========================================================= */
 
 async function loadMemories() {
 
@@ -1993,114 +1881,166 @@ async function loadMemories() {
         );
 
 
-    gallery.innerHTML =
-        `<div class="empty">
+    gallery.innerHTML = `
+        <div class="empty">
             Loading memories...
-        </div>`;
+        </div>
+    `;
 
 
-    const { data, error } =
-        await supabaseClient
-        .from("memories")
-        .select("*")
-        .eq(
-            "folder_id",
-            currentFolder.id
-        )
-        .order(
-            "created_at",
-            {
-                ascending: false
+    try {
+
+        const { data, error } =
+            await supabaseClient
+                .from("memories")
+                .select("*")
+                .eq(
+                    "folder_id",
+                    currentAlbum.id
+                )
+                .order(
+                    "created_at",
+                    {
+                        ascending: false
+                    }
+                );
+
+
+        if (error) {
+
+            throw error;
+
+        }
+
+
+        currentMemories =
+            data || [];
+
+
+        if (
+            currentMemories.length === 0
+        ) {
+
+            gallery.innerHTML = `
+                <div class="empty">
+                    No memories yet.
+                    <br><br>
+                    Upload the first photo.
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        gallery.innerHTML = "";
+
+
+        currentMemories.forEach(
+            (memory, index) => {
+
+                const card =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                card.className =
+                    "memory";
+
+
+                const image =
+                    document.createElement(
+                        "img"
+                    );
+
+
+                image.src =
+                    memory.file_url;
+
+
+                image.alt =
+                    "School memory";
+
+
+                image.loading =
+                    "lazy";
+
+
+                image.onerror =
+                    () => {
+
+                        image.style.display =
+                            "none";
+
+                    };
+
+
+                card.appendChild(
+                    image
+                );
+
+
+                card.onclick =
+                    () =>
+                        openViewer(index);
+
+
+                gallery.appendChild(
+                    card
+                );
+
             }
         );
 
 
-    if (error) {
+    } catch (error) {
 
-        console.error(error);
-
-        gallery.innerHTML =
-            `<div class="empty">
-                Unable to load memories.
-            </div>`;
-
-        return;
-    }
+        console.error(
+            "Memory loading error:",
+            error
+        );
 
 
-    currentMemories =
-        data || [];
+        gallery.innerHTML = `
 
+            <div class="empty">
 
-    if (
-        currentMemories.length === 0
-    ) {
+                <strong>
+                    Unable to load memories.
+                </strong>
 
-        gallery.innerHTML =
-            `<div class="empty">
-                No memories yet.
                 <br><br>
-                Be the first to add one.
-            </div>`;
 
-        return;
+                ${escapeHTML(
+                    error.message ||
+                    String(error)
+                )}
+
+            </div>
+
+        `;
+
     }
-
-
-    gallery.innerHTML =
-        "";
-
-
-    currentMemories.forEach(
-        (memory, index) => {
-
-
-            const card =
-                document.createElement(
-                    "div"
-                );
-
-
-            card.className =
-                "memory";
-
-
-            card.innerHTML = `
-
-                <img
-                    src="${memory.file_url}"
-                    alt="School memory"
-                    loading="lazy"
-                >
-
-            `;
-
-
-            card.onclick =
-                () => openViewer(index);
-
-
-            gallery.appendChild(card);
-
-        }
-    );
 
 }
 
 
-/* =====================================================
-   UPLOAD
-===================================================== */
+/* =========================================================
+   UPLOAD PHOTOS
+========================================================= */
 
 async function uploadPhotos() {
 
-    if (!currentFolder) {
+    if (!currentAlbum) {
 
         alert(
             "Please open an album first."
         );
 
         return;
+
     }
 
 
@@ -2112,7 +2052,7 @@ async function uploadPhotos() {
 
     const files =
         Array.from(
-            input.files
+            input.files || []
         );
 
 
@@ -2122,16 +2062,24 @@ async function uploadPhotos() {
         );
 
 
-    if (
-        files.length === 0
-    ) {
+    const button =
+        document.getElementById(
+            "uploadButton"
+        );
+
+
+    if (files.length === 0) {
 
         alert(
-            "Please choose at least one photo."
+            "Please select at least one photo."
         );
 
         return;
+
     }
+
+
+    button.disabled = true;
 
 
     let uploaded = 0;
@@ -2141,116 +2089,140 @@ async function uploadPhotos() {
         const file of files
     ) {
 
-
         try {
 
-
             status.textContent =
-                `Uploading ${
-                    uploaded + 1
-                } of ${
-                    files.length
-                }...`;
+                `Uploading ${uploaded + 1} of ${files.length}...`;
 
 
-            const cleanName =
-                file.name.replace(
-                    /[^a-zA-Z0-9.-]/g,
-                    "_"
-                );
-
-
-            const uniqueName =
-                `${Date.now()}-${
-                    Math.random()
-                    .toString(36)
-                    .substring(2)
-                }-${cleanName}`;
-
-
-            const filePath =
-                `${currentFolder.id}/${uniqueName}`;
-
-
-            const {
-                error:
-                uploadError
-            } =
-                await supabaseClient
-                .storage
-                .from("memories")
-                .upload(
-                    filePath,
-                    file,
-                    {
-                        cacheControl:
-                            "3600",
-
-                        upsert:
-                            false
-                    }
-                );
-
+            /* =====================================
+               FILE VALIDATION
+            ===================================== */
 
             if (
-                uploadError
+                !file.type.startsWith(
+                    "image/"
+                )
             ) {
 
-                throw uploadError;
+                throw new Error(
+                    `${file.name} is not an image.`
+                );
 
             }
 
 
-            const {
-                data:
-                publicData
-            } =
-                supabaseClient
-                .storage
-                .from("memories")
-                .getPublicUrl(
-                    filePath
-                );
+            /* =====================================
+               CLEAN FILE NAME
+            ===================================== */
+
+            const cleanName =
+                file.name
+                    .replace(
+                        /[^a-zA-Z0-9.-]/g,
+                        "_"
+                    );
 
 
-            const publicURL =
-                publicData.publicUrl;
+            const uniqueName =
+                Date.now() +
+                "-" +
+                Math.random()
+                    .toString(36)
+                    .substring(2) +
+                "-" +
+                cleanName;
 
 
-            const {
-                error:
-                databaseError
-            } =
+            const filePath =
+                currentAlbum.id +
+                "/" +
+                uniqueName;
+
+
+            /* =====================================
+               STORAGE UPLOAD
+            ===================================== */
+
+            const uploadResult =
                 await supabaseClient
-                .from("memories")
-                .insert({
+                    .storage
+                    .from("memories")
+                    .upload(
+                        filePath,
+                        file,
+                        {
+                            cacheControl:
+                                "3600",
 
-                    folder_id:
-                        currentFolder.id,
-
-                    file_url:
-                        publicURL
-
-                });
+                            upsert:
+                                false
+                        }
+                    );
 
 
             if (
-                databaseError
+                uploadResult.error
             ) {
 
-                throw databaseError;
+                throw uploadResult.error;
+
+            }
+
+
+            /* =====================================
+               PUBLIC URL
+            ===================================== */
+
+            const publicResult =
+                supabaseClient
+                    .storage
+                    .from("memories")
+                    .getPublicUrl(
+                        filePath
+                    );
+
+
+            const publicURL =
+                publicResult
+                    .data
+                    .publicUrl;
+
+
+            /* =====================================
+               SAVE DATABASE RECORD
+            ===================================== */
+
+            const databaseResult =
+                await supabaseClient
+                    .from("memories")
+                    .insert({
+
+                        folder_id:
+                            currentAlbum.id,
+
+                        file_url:
+                            publicURL
+
+                    });
+
+
+            if (
+                databaseResult.error
+            ) {
+
+                throw databaseResult.error;
 
             }
 
 
             uploaded++;
 
-        }
 
-
-        catch (error) {
+        } catch (error) {
 
             console.error(
+                "Upload error:",
                 error
             );
 
@@ -2258,6 +2230,10 @@ async function uploadPhotos() {
             status.textContent =
                 "Upload failed: " +
                 error.message;
+
+
+            button.disabled =
+                false;
 
 
             return;
@@ -2273,9 +2249,13 @@ async function uploadPhotos() {
     status.textContent =
         `${uploaded} ${
             uploaded === 1
-                ? "memory"
-                : "memories"
-        } added successfully.`;
+                ? "photo"
+                : "photos"
+        } uploaded successfully!`;
+
+
+    button.disabled =
+        false;
 
 
     await loadMemories();
@@ -2283,16 +2263,18 @@ async function uploadPhotos() {
 }
 
 
-/* =====================================================
-   VIEWER
-===================================================== */
+/* =========================================================
+   OPEN VIEWER
+========================================================= */
 
 function openViewer(index) {
 
     if (
         !currentMemories.length
     ) {
+
         return;
+
     }
 
 
@@ -2305,7 +2287,8 @@ function openViewer(index) {
 
     document
         .getElementById("viewer")
-        .classList.add("active");
+        .classList
+        .add("active");
 
 
     document.body.style.overflow =
@@ -2314,12 +2297,23 @@ function openViewer(index) {
 }
 
 
+/* =========================================================
+   UPDATE VIEWER
+========================================================= */
+
 function updateViewer() {
 
     const memory =
         currentMemories[
             currentPhotoIndex
         ];
+
+
+    if (!memory) {
+
+        return;
+
+    }
 
 
     document
@@ -2332,55 +2326,50 @@ function updateViewer() {
 
     document
         .getElementById(
-            "photoCounter"
+            "counter"
         )
         .textContent =
-        `${currentPhotoIndex + 1}
-        /
-        ${currentMemories.length}`;
+        `${currentPhotoIndex + 1} / ${currentMemories.length}`;
 
 
-    const previous =
-        document.getElementById(
-            "previousButton"
-        );
+    const showNavigation =
+        currentMemories.length > 1;
 
 
-    const next =
-        document.getElementById(
+    document
+        .getElementById(
+            "prevButton"
+        )
+        .style.display =
+        showNavigation
+            ? "flex"
+            : "none";
+
+
+    document
+        .getElementById(
             "nextButton"
-        );
-
-
-    if (
-        currentMemories.length <= 1
-    ) {
-
-        previous.style.display =
-            "none";
-
-        next.style.display =
-            "none";
-
-    } else {
-
-        previous.style.display =
-            "flex";
-
-        next.style.display =
-            "flex";
-
-    }
+        )
+        .style.display =
+        showNavigation
+            ? "flex"
+            : "none";
 
 }
 
+
+/* =========================================================
+   NEXT PHOTO
+========================================================= */
 
 function nextPhoto() {
 
     if (
         currentMemories.length <= 1
     ) {
+
         return;
+
     }
 
 
@@ -2403,12 +2392,18 @@ function nextPhoto() {
 }
 
 
+/* =========================================================
+   PREVIOUS PHOTO
+========================================================= */
+
 function previousPhoto() {
 
     if (
         currentMemories.length <= 1
     ) {
+
         return;
+
     }
 
 
@@ -2430,17 +2425,23 @@ function previousPhoto() {
 }
 
 
+/* =========================================================
+   CLOSE VIEWER
+========================================================= */
+
 function closeViewer() {
 
     document
         .getElementById("viewer")
-        .classList.remove("active");
+        .classList
+        .remove("active");
 
 
     document
-        .getElementById("viewerImage")
-        .src =
-        "";
+        .getElementById(
+            "viewerImage"
+        )
+        .src = "";
 
 
     document.body.style.overflow =
@@ -2449,14 +2450,13 @@ function closeViewer() {
 }
 
 
-/* =====================================================
+/* =========================================================
    KEYBOARD
-===================================================== */
+========================================================= */
 
 document.addEventListener(
     "keydown",
     function(event) {
-
 
         const viewer =
             document.getElementById(
@@ -2469,7 +2469,9 @@ document.addEventListener(
                 "active"
             )
         ) {
+
             return;
+
         }
 
 
@@ -2506,9 +2508,9 @@ document.addEventListener(
 );
 
 
-/* =====================================================
-   SWIPE
-===================================================== */
+/* =========================================================
+   TOUCH SWIPE
+========================================================= */
 
 let touchStartX = 0;
 
@@ -2526,9 +2528,8 @@ viewer.addEventListener(
     function(event) {
 
         touchStartX =
-            event.changedTouches[
-                0
-            ].screenX;
+            event.changedTouches[0]
+                .screenX;
 
     },
     {
@@ -2542,9 +2543,8 @@ viewer.addEventListener(
     function(event) {
 
         touchEndX =
-            event.changedTouches[
-                0
-            ].screenX;
+            event.changedTouches[0]
+                .screenX;
 
 
         const distance =
@@ -2553,16 +2553,15 @@ viewer.addEventListener(
 
 
         if (
-            Math.abs(distance) <
-            50
+            Math.abs(distance) < 50
         ) {
+
             return;
+
         }
 
 
-        if (
-            distance < 0
-        ) {
+        if (distance < 0) {
 
             nextPhoto();
 
@@ -2579,39 +2578,13 @@ viewer.addEventListener(
 );
 
 
-/* =====================================================
-   ESCAPE HTML
-===================================================== */
+/* =========================================================
+   START APPLICATION
+========================================================= */
 
-function escapeHTML(text) {
-
-    const div =
-        document.createElement(
-            "div"
-        );
-
-
-    div.textContent =
-        text;
-
-
-    return div.innerHTML;
-
-}
-
-
-/* =====================================================
-   START
-===================================================== */
-
-loadFolders();
+loadAlbums();
 
 </script>
 
-
 </body>
-
 </html>
-
-
-   
