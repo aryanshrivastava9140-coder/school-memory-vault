@@ -6,6 +6,9 @@
 
     <title>Our School Memories</title>
 
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
         * {
             box-sizing: border-box;
@@ -109,6 +112,12 @@
             padding: 50px 20px;
             color: #888;
         }
+
+        #status {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
     </style>
 </head>
 
@@ -122,6 +131,7 @@
 <div class="container">
 
     <div class="actions">
+
         <button class="upload-btn" onclick="uploadMemory()">
             📤 Upload Memory
         </button>
@@ -129,65 +139,150 @@
         <button class="folder-btn" onclick="createFolder()">
             + Create Folder
         </button>
+
     </div>
 
     <h2>Memory Folders</h2>
 
-    <div class="folders">
-
-        <div class="folder">
-            <div class="folder-icon">📸</div>
-            <div class="folder-name">Farewell</div>
-            <div class="folder-count">0 memories</div>
+    <div class="folders" id="folders">
+        <div class="empty">
+            Loading folders...
         </div>
-
-        <div class="folder">
-            <div class="folder-icon">🏀</div>
-            <div class="folder-name">Sports</div>
-            <div class="folder-count">0 memories</div>
-        </div>
-
-        <div class="folder">
-            <div class="folder-icon">🚌</div>
-            <div class="folder-name">School Trips</div>
-            <div class="folder-count">0 memories</div>
-        </div>
-
-        <div class="folder">
-            <div class="folder-icon">🎤</div>
-            <div class="folder-name">Annual Function</div>
-            <div class="folder-count">0 memories</div>
-        </div>
-
-        <div class="folder">
-            <div class="folder-icon">🎓</div>
-            <div class="folder-name">Class 12</div>
-            <div class="folder-count">0 memories</div>
-        </div>
-
-        <div class="folder">
-            <div class="folder-icon">😂</div>
-            <div class="folder-name">Random Memories</div>
-            <div class="folder-count">0 memories</div>
-        </div>
-
     </div>
 
-    <div class="empty">
-        <p>Your memories will appear here.</p>
-    </div>
+    <div id="status"></div>
 
 </div>
 
 <script>
 
-function uploadMemory() {
-    alert("Upload system coming next!");
-}
+    // ==========================================
+    // SUPABASE CONNECTION
+    // ==========================================
 
-function createFolder() {
-    alert("Folder creation system coming next!");
-}
+    const SUPABASE_URL = "https://swqfgyeqltyzeudeaepn.supabase.co";
+
+    const SUPABASE_KEY = "sb_publishable_IFCmPqb8d-CFUVZ8KMr4Iw_eV1QbvsD";
+
+    const supabaseClient = supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+    // ==========================================
+    // LOAD FOLDERS
+    // ==========================================
+
+    async function loadFolders() {
+
+        const { data, error } = await supabaseClient
+            .from("folders")
+            .select("*")
+            .order("created_at", { ascending: true });
+
+        if (error) {
+
+            console.error(error);
+
+            document.getElementById("folders").innerHTML =
+                "<div class='empty'>Unable to load folders.</div>";
+
+            return;
+        }
+
+        const foldersContainer =
+            document.getElementById("folders");
+
+        foldersContainer.innerHTML = "";
+
+        if (data.length === 0) {
+
+            foldersContainer.innerHTML =
+                "<div class='empty'>No folders yet.</div>";
+
+            return;
+        }
+
+        data.forEach(folder => {
+
+            const folderElement =
+                document.createElement("div");
+
+            folderElement.className = "folder";
+
+            folderElement.innerHTML = `
+                <div class="folder-icon">
+                    ${folder.icon || "📁"}
+                </div>
+
+                <div class="folder-name">
+                    ${folder.name}
+                </div>
+
+                <div class="folder-count">
+                    Open folder
+                </div>
+            `;
+
+            foldersContainer.appendChild(folderElement);
+
+        });
+    }
+
+
+    // ==========================================
+    // CREATE FOLDER
+    // ==========================================
+
+    async function createFolder() {
+
+        const name =
+            prompt("Enter the folder name:");
+
+        if (!name) return;
+
+        const { error } =
+            await supabaseClient
+                .from("folders")
+                .insert({
+                    name: name,
+                    icon: "📁"
+                });
+
+        if (error) {
+
+            alert("Could not create folder.");
+
+            console.error(error);
+
+            return;
+        }
+
+        alert("Folder created successfully!");
+
+        loadFolders();
+    }
+
+
+    // ==========================================
+    // UPLOAD
+    // ==========================================
+
+    function uploadMemory() {
+
+        alert(
+            "The upload system will be connected next."
+        );
+
+    }
+
+
+    // ==========================================
+    // START APP
+    // ==========================================
+
+    loadFolders();
 
 </script>
 
