@@ -13,140 +13,160 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     background: #f5f5f5;
     color: #222;
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
 
 header {
     background: #111;
     color: white;
     text-align: center;
-    padding: 25px 15px;
+    padding: 26px 15px;
 }
 
 header h1 {
     margin: 0;
-    font-size: 24px;
+    font-size: 25px;
+    letter-spacing: 0.3px;
 }
 
 header p {
     margin: 7px 0 0;
     color: #aaa;
-    font-size: 14px;
+    font-size: 13px;
 }
 
-/* CONTAINER */
+/* ================= CONTAINER ================= */
 
 .container {
-    max-width: 1100px;
+    width: 100%;
+    max-width: 1150px;
     margin: auto;
-    padding: 20px;
+    padding: 22px;
 }
 
-/* BUTTONS */
+/* ================= BUTTONS ================= */
 
 .actions {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
-    margin-bottom: 25px;
+    margin-bottom: 22px;
 }
 
 button {
     border: none;
-    border-radius: 7px;
-    padding: 11px 17px;
-    cursor: pointer;
+    border-radius: 8px;
+    padding: 11px 16px;
     font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
-.back-btn {
+button:active {
+    transform: scale(0.97);
+}
+
+.primary-btn {
     background: #111;
     color: white;
 }
 
-.create-btn {
+.secondary-btn {
     background: white;
+    color: #222;
     border: 1px solid #ddd;
 }
 
-.upload-btn {
-    background: #111;
-    color: white;
+.primary-btn:hover {
+    background: #292929;
 }
 
-/* FOLDERS */
+/* ================= TITLES ================= */
 
-h2 {
-    font-size: 20px;
-    margin-bottom: 15px;
+.page-title {
+    margin: 5px 0 17px;
+    font-size: 21px;
 }
+
+/* ================= FOLDERS ================= */
 
 .folders {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-    gap: 15px;
+    gap: 16px;
 }
 
 .folder {
     background: white;
     border: 1px solid #ddd;
-    border-radius: 12px;
+    border-radius: 14px;
     padding: 20px;
     cursor: pointer;
     transition: 0.2s;
 }
 
 .folder:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px rgba(0,0,0,0.08);
 }
 
 .folder-icon {
-    font-size: 32px;
+    font-size: 34px;
     margin-bottom: 12px;
 }
 
 .folder-name {
-    font-weight: bold;
     font-size: 16px;
+    font-weight: bold;
 }
 
 .folder-count {
     margin-top: 6px;
-    color: #888;
     font-size: 13px;
+    color: #888;
 }
 
-/* UPLOAD BOX */
+/* ================= UPLOAD ================= */
 
 .upload-box {
     background: white;
     border: 1px solid #ddd;
-    border-radius: 12px;
+    border-radius: 14px;
     padding: 18px;
     margin-bottom: 25px;
 }
 
 .upload-box h3 {
-    margin-top: 0;
+    margin: 0 0 12px;
+    font-size: 17px;
 }
 
-input[type="file"] {
+.file-input {
     width: 100%;
-    margin: 12px 0;
+    margin-bottom: 14px;
 }
 
-/* GALLERY */
+.status {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+/* ================= GALLERY ================= */
 
 .gallery {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
     gap: 15px;
 }
 
@@ -155,65 +175,113 @@ input[type="file"] {
     border-radius: 12px;
     overflow: hidden;
     border: 1px solid #ddd;
-    cursor: pointer;
     aspect-ratio: 1 / 1;
+    cursor: pointer;
+    position: relative;
 }
 
 .memory img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
     display: block;
-    transition: 0.2s;
+    object-fit: cover;
+    transition: transform 0.25s ease;
 }
 
 .memory:hover img {
-    transform: scale(1.03);
+    transform: scale(1.04);
 }
+
+/* ================= EMPTY ================= */
 
 .empty {
+    width: 100%;
     text-align: center;
+    padding: 55px 20px;
     color: #888;
-    padding: 50px 20px;
+    font-size: 14px;
 }
 
-/* FULLSCREEN IMAGE */
+/* ================= VIEWER ================= */
 
 .viewer {
     display: none;
     position: fixed;
-    z-index: 9999;
     inset: 0;
-    background: rgba(0,0,0,0.94);
+    z-index: 9999;
+    background: rgba(0,0,0,0.96);
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    touch-action: pan-y;
 }
 
-.viewer img {
-    max-width: 95%;
-    max-height: 90%;
+.viewer.active {
+    display: flex;
+}
+
+.viewer-image {
+    max-width: 86%;
+    max-height: 84vh;
     object-fit: contain;
     border-radius: 8px;
+    user-select: none;
 }
+
+/* ================= VIEWER BUTTONS ================= */
 
 .close-viewer {
     position: absolute;
-    top: 20px;
-    right: 25px;
+    top: 18px;
+    right: 22px;
     color: white;
-    font-size: 35px;
+    font-size: 36px;
+    line-height: 1;
     cursor: pointer;
+    z-index: 3;
 }
 
-/* STATUS */
-
-#status {
-    margin-top: 10px;
-    font-size: 14px;
+.nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    color: white;
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    backdrop-filter: blur(5px);
 }
 
-/* MOBILE */
+.nav-button:hover {
+    background: rgba(255,255,255,0.28);
+}
+
+.previous {
+    left: 18px;
+}
+
+.next {
+    right: 18px;
+}
+
+.photo-counter {
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    background: rgba(0,0,0,0.5);
+    padding: 7px 13px;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+/* ================= MOBILE ================= */
 
 @media (max-width: 600px) {
 
@@ -236,6 +304,15 @@ input[type="file"] {
 
     .folder {
         padding: 15px;
+        border-radius: 11px;
+    }
+
+    .folder-icon {
+        font-size: 28px;
+    }
+
+    .folder-name {
+        font-size: 14px;
     }
 
     .gallery {
@@ -245,6 +322,32 @@ input[type="file"] {
 
     .memory {
         border-radius: 8px;
+    }
+
+    .viewer-image {
+        max-width: 94%;
+        max-height: 82vh;
+    }
+
+    .nav-button {
+        width: 40px;
+        height: 40px;
+        font-size: 23px;
+        background: rgba(255,255,255,0.12);
+    }
+
+    .previous {
+        left: 8px;
+    }
+
+    .next {
+        right: 8px;
+    }
+
+    .close-viewer {
+        top: 15px;
+        right: 17px;
+        font-size: 32px;
     }
 }
 </style>
@@ -259,64 +362,93 @@ input[type="file"] {
 
 <div class="container">
 
-    <!-- FOLDER PAGE -->
+    <!-- ================= FOLDER PAGE ================= -->
 
     <section id="folderPage">
 
         <div class="actions">
 
-            <button class="create-btn" onclick="createFolder()">
-                ➕ Create Folder
+            <button
+                class="primary-btn"
+                onclick="createFolder()">
+                + Create Folder
             </button>
 
         </div>
 
-        <h2>Memory Folders</h2>
+        <h2 class="page-title">
+            Memory Folders
+        </h2>
 
-        <div id="folders" class="folders">
-            <div class="empty">Loading folders...</div>
+        <div
+            id="folders"
+            class="folders">
+
+            <div class="empty">
+                Loading folders...
+            </div>
+
         </div>
 
     </section>
 
 
-    <!-- MEMORY PAGE -->
+    <!-- ================= MEMORY PAGE ================= -->
 
-    <section id="memoryPage" style="display:none;">
+    <section
+        id="memoryPage"
+        style="display:none;">
 
         <div class="actions">
 
-            <button class="back-btn" onclick="showFolders()">
+            <button
+                class="primary-btn"
+                onclick="showFolders()">
                 ← Back to Folders
             </button>
 
         </div>
 
-        <h2 id="currentFolderName"></h2>
+        <h2
+            id="currentFolderName"
+            class="page-title">
+        </h2>
 
         <div class="upload-box">
 
-            <h3>📸 Upload a Memory</h3>
+            <h3>
+                📸 Upload a Memory
+            </h3>
 
             <input
-                type="file"
                 id="photoInput"
+                class="file-input"
+                type="file"
                 accept="image/*"
                 multiple
             >
 
             <button
-                class="upload-btn"
+                class="primary-btn"
                 onclick="uploadPhotos()">
                 ⬆️ Upload Photos
             </button>
 
-            <div id="status"></div>
+            <div
+                id="status"
+                class="status">
+            </div>
 
         </div>
 
-        <div id="gallery" class="gallery">
-            <div class="empty">Loading memories...</div>
+        <div
+            id="gallery"
+            class="gallery">
+
+            <div class="empty">
+                Loading memories...
+            </div>
+
         </div>
 
     </section>
@@ -324,30 +456,53 @@ input[type="file"] {
 </div>
 
 
-<!-- IMAGE VIEWER -->
+<!-- ================= FULLSCREEN VIEWER ================= -->
 
 <div
     id="viewer"
-    class="viewer"
-    onclick="closeViewer()">
+    class="viewer">
 
-    <span class="close-viewer">×</span>
+    <span
+        class="close-viewer"
+        onclick="closeViewer()">
+        ×
+    </span>
+
+    <button
+        id="previousButton"
+        class="nav-button previous"
+        onclick="previousPhoto()">
+        ‹
+    </button>
 
     <img
         id="viewerImage"
+        class="viewer-image"
         src=""
-        alt="Memory"
-        onclick="event.stopPropagation()"
+        alt="School memory"
     >
+
+    <button
+        id="nextButton"
+        class="nav-button next"
+        onclick="nextPhoto()">
+        ›
+    </button>
+
+    <div
+        id="photoCounter"
+        class="photo-counter">
+        1 / 1
+    </div>
 
 </div>
 
 
 <script>
 
-/* =====================================================
-   SUPABASE CONNECTION
-===================================================== */
+/* =========================================================
+   SUPABASE
+========================================================= */
 
 const SUPABASE_URL =
 "https://swqfgyeqltyzeudeaepn.supabase.co";
@@ -362,24 +517,30 @@ supabase.createClient(
 );
 
 
-/* =====================================================
+/* =========================================================
    GLOBAL VARIABLES
-===================================================== */
+========================================================= */
 
 let currentFolder = null;
 
+let currentMemories = [];
 
-/* =====================================================
+let currentPhotoIndex = 0;
+
+
+/* =========================================================
    LOAD FOLDERS
-===================================================== */
+========================================================= */
 
 async function loadFolders() {
 
-    const foldersContainer =
+    const container =
         document.getElementById("folders");
 
-    foldersContainer.innerHTML =
-        '<div class="empty">Loading folders...</div>';
+    container.innerHTML =
+        `<div class="empty">
+            Loading folders...
+        </div>`;
 
     const { data, error } =
         await supabaseClient
@@ -393,27 +554,29 @@ async function loadFolders() {
 
         console.error(error);
 
-        foldersContainer.innerHTML =
-            '<div class="empty">Unable to load folders.</div>';
+        container.innerHTML =
+            `<div class="empty">
+                ❌ Unable to load folders.
+            </div>`;
 
         return;
     }
 
     if (!data || data.length === 0) {
 
-        foldersContainer.innerHTML =
-            '<div class="empty">No folders yet.</div>';
+        container.innerHTML =
+            `<div class="empty">
+                📁 No folders yet.
+            </div>`;
 
         return;
     }
 
-    foldersContainer.innerHTML = "";
+    container.innerHTML = "";
 
     for (const folder of data) {
 
-        /* Get memory count */
-
-        const { count } =
+        const { count, error: countError } =
             await supabaseClient
             .from("memories")
             .select("*", {
@@ -422,15 +585,20 @@ async function loadFolders() {
             })
             .eq("folder_id", folder.id);
 
-        const folderElement =
+        if (countError) {
+            console.error(countError);
+        }
+
+        const card =
             document.createElement("div");
 
-        folderElement.className = "folder";
+        card.className = "folder";
 
-        folderElement.onclick = () =>
+        card.onclick = function() {
             openFolder(folder);
+        };
 
-        folderElement.innerHTML = `
+        card.innerHTML = `
 
             <div class="folder-icon">
                 ${folder.icon || "📁"}
@@ -441,19 +609,20 @@ async function loadFolders() {
             </div>
 
             <div class="folder-count">
-                ${count || 0} ${count === 1 ? "memory" : "memories"}
+                ${count || 0}
+                ${(count || 0) === 1 ? "memory" : "memories"}
             </div>
 
         `;
 
-        foldersContainer.appendChild(folderElement);
+        container.appendChild(card);
     }
 }
 
 
-/* =====================================================
+/* =========================================================
    CREATE FOLDER
-===================================================== */
+========================================================= */
 
 async function createFolder() {
 
@@ -484,15 +653,15 @@ async function createFolder() {
         return;
     }
 
-    alert("Folder created successfully!");
+    await loadFolders();
 
-    loadFolders();
+    alert("Folder created successfully!");
 }
 
 
-/* =====================================================
+/* =========================================================
    OPEN FOLDER
-===================================================== */
+========================================================= */
 
 async function openFolder(folder) {
 
@@ -508,17 +677,24 @@ async function openFolder(folder) {
         .textContent =
         `${folder.icon || "📁"} ${folder.name}`;
 
-    loadMemories();
+    await loadMemories();
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 }
 
 
-/* =====================================================
-   SHOW FOLDERS
-===================================================== */
+/* =========================================================
+   BACK TO FOLDERS
+========================================================= */
 
 function showFolders() {
 
     currentFolder = null;
+
+    currentMemories = [];
 
     document.getElementById("memoryPage")
         .style.display = "none";
@@ -527,12 +703,17 @@ function showFolders() {
         .style.display = "block";
 
     loadFolders();
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 }
 
 
-/* =====================================================
+/* =========================================================
    LOAD MEMORIES
-===================================================== */
+========================================================= */
 
 async function loadMemories() {
 
@@ -540,7 +721,9 @@ async function loadMemories() {
         document.getElementById("gallery");
 
     gallery.innerHTML =
-        '<div class="empty">Loading memories...</div>';
+        `<div class="empty">
+            Loading memories...
+        </div>`;
 
     if (!currentFolder) {
         return;
@@ -560,49 +743,61 @@ async function loadMemories() {
         console.error(error);
 
         gallery.innerHTML =
-            '<div class="empty">Unable to load memories.</div>';
+            `<div class="empty">
+                ❌ Unable to load memories.
+            </div>`;
 
         return;
     }
 
-    if (!data || data.length === 0) {
+    currentMemories =
+        data || [];
+
+    if (currentMemories.length === 0) {
 
         gallery.innerHTML =
-            '<div class="empty">📸 No memories yet.</div>';
+            `<div class="empty">
+                📸 No memories yet.
+                <br><br>
+                Upload your first memory above.
+            </div>`;
 
         return;
     }
 
     gallery.innerHTML = "";
 
-    data.forEach(memory => {
+    currentMemories.forEach(
+        (memory, index) => {
 
-        const memoryElement =
-            document.createElement("div");
+            const card =
+                document.createElement("div");
 
-        memoryElement.className = "memory";
+            card.className = "memory";
 
-        memoryElement.innerHTML = `
+            card.innerHTML = `
 
-            <img
-                src="${memory.file_url}"
-                alt="School memory"
-                loading="lazy"
-            >
+                <img
+                    src="${memory.file_url}"
+                    alt="School memory"
+                    loading="lazy"
+                >
 
-        `;
+            `;
 
-        memoryElement.onclick = () =>
-            openViewer(memory.file_url);
+            card.onclick = function() {
+                openViewer(index);
+            };
 
-        gallery.appendChild(memoryElement);
-    });
+            gallery.appendChild(card);
+        }
+    );
 }
 
 
-/* =====================================================
+/* =========================================================
    UPLOAD PHOTOS
-===================================================== */
+========================================================= */
 
 async function uploadPhotos() {
 
@@ -624,13 +819,15 @@ async function uploadPhotos() {
 
     if (files.length === 0) {
 
-        alert("Please select at least one photo.");
+        alert(
+            "Please select at least one photo."
+        );
 
         return;
     }
 
     status.innerHTML =
-        "⏳ Uploading photos...";
+        "⏳ Preparing upload...";
 
     let uploaded = 0;
 
@@ -638,22 +835,35 @@ async function uploadPhotos() {
 
         try {
 
-            const safeName =
-                file.name
-                .replace(/[^a-zA-Z0-9.-]/g, "_");
-
-            const fileName =
-                `${currentFolder.id}/${Date.now()}-${Math.random().toString(36).substring(2)}-${safeName}`;
+            status.innerHTML =
+                `⏳ Uploading ${uploaded + 1} of ${files.length}...`;
 
 
-            /* Upload to Storage */
+            /* Create unique filename */
+
+            const cleanName =
+                file.name.replace(
+                    /[^a-zA-Z0-9.-]/g,
+                    "_"
+                );
+
+            const uniqueName =
+                `${Date.now()}-${Math.random()
+                .toString(36)
+                .substring(2)}-${cleanName}`;
+
+            const filePath =
+                `${currentFolder.id}/${uniqueName}`;
+
+
+            /* Upload to Supabase Storage */
 
             const { error: uploadError } =
                 await supabaseClient
                 .storage
                 .from("memories")
                 .upload(
-                    fileName,
+                    filePath,
                     file,
                     {
                         cacheControl: "3600",
@@ -672,15 +882,15 @@ async function uploadPhotos() {
                 supabaseClient
                 .storage
                 .from("memories")
-                .getPublicUrl(fileName);
+                .getPublicUrl(filePath);
 
             const publicURL =
                 publicData.publicUrl;
 
 
-            /* Save information in database */
+            /* Save URL to database */
 
-            const { error: dbError } =
+            const { error: databaseError } =
                 await supabaseClient
                 .from("memories")
                 .insert({
@@ -692,14 +902,11 @@ async function uploadPhotos() {
                         publicURL
                 });
 
-            if (dbError) {
-                throw dbError;
+            if (databaseError) {
+                throw databaseError;
             }
 
             uploaded++;
-
-            status.innerHTML =
-                `⏳ Uploaded ${uploaded}/${files.length}...`;
 
         }
 
@@ -708,65 +915,252 @@ async function uploadPhotos() {
             console.error(error);
 
             status.innerHTML =
-                "❌ Upload error: " +
-                error.message;
+                `❌ Upload failed: ${error.message}`;
 
             return;
         }
     }
 
-    status.innerHTML =
-        `✅ ${uploaded} photo${uploaded === 1 ? "" : "s"} uploaded successfully!`;
-
     input.value = "";
+
+    status.innerHTML =
+        `✅ ${uploaded} photo${
+            uploaded === 1 ? "" : "s"
+        } uploaded successfully!`;
 
     await loadMemories();
 }
 
 
-/* =====================================================
-   FULLSCREEN VIEWER
-===================================================== */
+/* =========================================================
+   OPEN VIEWER
+========================================================= */
 
-function openViewer(url) {
+function openViewer(index) {
 
-    const viewer =
-        document.getElementById("viewer");
+    if (
+        !currentMemories.length ||
+        index < 0 ||
+        index >= currentMemories.length
+    ) {
+        return;
+    }
 
-    const image =
-        document.getElementById("viewerImage");
+    currentPhotoIndex = index;
 
-    image.src = url;
+    updateViewer();
 
-    viewer.style.display = "flex";
+    document.getElementById("viewer")
+        .classList.add("active");
+
+    document.body.style.overflow = "hidden";
 }
 
+
+/* =========================================================
+   UPDATE VIEWER
+========================================================= */
+
+function updateViewer() {
+
+    if (!currentMemories.length) {
+        return;
+    }
+
+    const memory =
+        currentMemories[currentPhotoIndex];
+
+    document.getElementById("viewerImage")
+        .src = memory.file_url;
+
+    document.getElementById("photoCounter")
+        .textContent =
+        `${currentPhotoIndex + 1} / ${currentMemories.length}`;
+
+    const previous =
+        document.getElementById("previousButton");
+
+    const next =
+        document.getElementById("nextButton");
+
+    if (currentMemories.length <= 1) {
+
+        previous.style.display = "none";
+        next.style.display = "none";
+
+    } else {
+
+        previous.style.display = "flex";
+        next.style.display = "flex";
+    }
+}
+
+
+/* =========================================================
+   NEXT PHOTO
+========================================================= */
+
+function nextPhoto() {
+
+    if (currentMemories.length <= 1) {
+        return;
+    }
+
+    currentPhotoIndex++;
+
+    if (
+        currentPhotoIndex >=
+        currentMemories.length
+    ) {
+        currentPhotoIndex = 0;
+    }
+
+    updateViewer();
+}
+
+
+/* =========================================================
+   PREVIOUS PHOTO
+========================================================= */
+
+function previousPhoto() {
+
+    if (currentMemories.length <= 1) {
+        return;
+    }
+
+    currentPhotoIndex--;
+
+    if (currentPhotoIndex < 0) {
+        currentPhotoIndex =
+            currentMemories.length - 1;
+    }
+
+    updateViewer();
+}
+
+
+/* =========================================================
+   CLOSE VIEWER
+========================================================= */
 
 function closeViewer() {
 
     document.getElementById("viewer")
-        .style.display = "none";
+        .classList.remove("active");
+
+    document.getElementById("viewerImage")
+        .src = "";
+
+    document.body.style.overflow = "";
 }
 
 
-/* =====================================================
-   BASIC HTML ESCAPE
-===================================================== */
+/* =========================================================
+   KEYBOARD CONTROLS
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        const viewer =
+            document.getElementById("viewer");
+
+        if (!viewer.classList.contains("active")) {
+            return;
+        }
+
+        if (event.key === "ArrowRight") {
+            nextPhoto();
+        }
+
+        if (event.key === "ArrowLeft") {
+            previousPhoto();
+        }
+
+        if (event.key === "Escape") {
+            closeViewer();
+        }
+    }
+);
+
+
+/* =========================================================
+   MOBILE SWIPE
+========================================================= */
+
+let touchStartX = 0;
+let touchEndX = 0;
+
+const viewer =
+    document.getElementById("viewer");
+
+viewer.addEventListener(
+    "touchstart",
+    function(event) {
+
+        touchStartX =
+            event.changedTouches[0].screenX;
+    },
+    { passive: true }
+);
+
+viewer.addEventListener(
+    "touchend",
+    function(event) {
+
+        touchEndX =
+            event.changedTouches[0].screenX;
+
+        handleSwipe();
+    },
+    { passive: true }
+);
+
+
+function handleSwipe() {
+
+    const distance =
+        touchEndX - touchStartX;
+
+    const minimumSwipe =
+        50;
+
+    if (
+        Math.abs(distance) <
+        minimumSwipe
+    ) {
+        return;
+    }
+
+    if (distance < 0) {
+        nextPhoto();
+    } else {
+        previousPhoto();
+    }
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
 
 function escapeHTML(text) {
 
     const div =
         document.createElement("div");
 
-    div.textContent = text;
+    div.textContent =
+        text;
 
     return div.innerHTML;
 }
 
 
-/* =====================================================
-   START APP
-===================================================== */
+/* =========================================================
+   START APPLICATION
+========================================================= */
 
 loadFolders();
 
