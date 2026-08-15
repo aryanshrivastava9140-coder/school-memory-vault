@@ -1675,47 +1675,153 @@ async function loadFolders() {
         card.className =
             "folder";
 
+async function loadFolders() {
 
-        card.onclick =
-            () => openFolder(folder);
+    const container = document.getElementById("folders");
 
+    container.innerHTML = `
+        <div class="empty">
+            Connecting to memories...
+        </div>
+    `;
 
-        card.innerHTML = `
+    try {
 
-            <div class="folder-number">
-                ${String(i + 1).padStart(2, "0")}
+        console.log("Connecting to Supabase...");
+        console.log("URL:", SUPABASE_URL);
+
+        const { data, error } = await supabaseClient
+            .from("folders")
+            .select("*");
+
+        console.log("Folders:", data);
+        console.log("Error:", error);
+
+        if (error) {
+            throw error;
+        }
+
+        if (!data || data.length === 0) {
+
+            container.innerHTML = `
+                <div class="empty">
+                    No albums found.
+                    <br><br>
+                    Create your first album.
+                </div>
+            `;
+
+            document.getElementById("albumCount").textContent = "0";
+            document.getElementById("memoryCount").textContent = "0";
+
+            return;
+        }
+
+        document.getElementById("albumCount").textContent =
+            data.length;
+
+        container.innerHTML = "";
+
+        let totalMemories = 0;
+
+        data.forEach((folder, index) => {
+
+            const card = document.createElement("div");
+
+            card.className = "folder";
+
+            card.onclick = () => openFolder(folder);
+
+            card.innerHTML = `
+                <div class="folder-number">
+                    ${String(index + 1).padStart(2, "0")}
+                </div>
+
+                <div class="folder-icon">
+                    ${folder.icon || "📁"}
+                </div>
+
+                <div class="folder-name">
+                    ${escapeHTML(folder.name || "Untitled")}
+                </div>
+
+                <div class="folder-count">
+                    Open album
+                </div>
+            `;
+
+            container.appendChild(card);
+
+        });
+
+        /*
+         * Count memories separately.
+         * If this fails, the albums will still work.
+         */
+
+        const { count, error: memoryError } =
+            await supabaseClient
+                .from("memories")
+                .select("*", {
+                    count: "exact",
+                    head: true
+                });
+
+        if (memoryError) {
+
+            console.error(
+                "Memory count error:",
+                memoryError
+            );
+
+            document.getElementById(
+                "memoryCount"
+            ).textContent = "?";
+
+        } else {
+
+            totalMemories = count || 0;
+
+            document.getElementById(
+                "memoryCount"
+            ).textContent = totalMemories;
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "SUPABASE ERROR:",
+            error
+        );
+
+        container.innerHTML = `
+            <div class="empty">
+
+                <strong>
+                    Could not load albums.
+                </strong>
+
+                <br><br>
+
+                ${escapeHTML(
+                    error.message ||
+                    String(error)
+                )}
+
+                <br><br>
+
+                <small>
+                    Check your Supabase connection
+                    and table permissions.
+                </small>
+
             </div>
-
-            <div class="folder-icon">
-                ${folder.icon || "📁"}
-            </div>
-
-            <div class="folder-name">
-                ${escapeHTML(folder.name)}
-            </div>
-
-            <div class="folder-count">
-                ${memoryCount}
-                ${memoryCount === 1
-                    ? "memory"
-                    : "memories"}
-            </div>
-
         `;
-
-
-        container.appendChild(card);
 
     }
 
-
-    document
-        .getElementById("memoryCount")
-        .textContent =
-        totalMemories;
-
-}
-
+               }
 
 /* =====================================================
    CREATE FOLDER
