@@ -2790,7 +2790,25 @@ function createFeatureMemory(memory){
                 <div class="feature-caption">
                     A moment from our story.
                 </div>
+<div class="memory-social" onclick="event.stopPropagation();">
 
+    <button
+        class="memory-like-button"
+        type="button"
+        onclick="event.stopPropagation(); likeMemory('${escapeAttribute(memory.id)}')"
+    >
+        ❤️ <span id="like-count-${escapeAttribute(memory.id)}">0</span>
+    </button>
+
+    <button
+        class="memory-comment-button"
+        type="button"
+        onclick="event.stopPropagation(); openMemoryComments('${escapeAttribute(memory.id)}')"
+    >
+        💬 Comments
+    </button>
+
+</div>
             </div>
 
         </article>
@@ -2836,7 +2854,25 @@ function createSideMemory(memory){
                 <div>
                     ${escapeHTML(caption)}
                 </div>
+<div class="memory-social" onclick="event.stopPropagation();">
 
+    <button
+        class="memory-like-button"
+        type="button"
+        onclick="event.stopPropagation(); likeMemory('${escapeAttribute(memory.id)}')"
+    >
+        ❤️ <span id="like-count-${escapeAttribute(memory.id)}">0</span>
+    </button>
+
+    <button
+        class="memory-comment-button"
+        type="button"
+        onclick="event.stopPropagation(); openMemoryComments('${escapeAttribute(memory.id)}')"
+    >
+        💬 Comments
+    </button>
+
+</div>
             </div>
 
         </article>
