@@ -3326,7 +3326,219 @@ document.addEventListener(
 
     }
 );
+/* =========================================================
+   YEARBOOK COMMENTS + LIKES
+   ========================================================= */
 
+/* ---------- COMMENTS ---------- */
+
+async function addYearbookComment(targetType, targetId, name, comment) {
+    name = String(name || "").trim();
+    comment = String(comment || "").trim();
+
+    if (!name || !comment) {
+        return { error: { message: "Please enter your name and comment." } };
+    }
+
+    if (name.length > 50) {
+        return { error: { message: "Name must be 50 characters or less." } };
+    }
+
+    if (comment.length > 500) {
+        return { error: { message: "Comment must be 500 characters or less." } };
+    }
+
+    const data = {
+        commenter_name: name,
+        comment: comment
+    };
+
+    if (targetType === "student") {
+        data.student_id = targetId;
+    } else if (targetType === "memory") {
+        data.memory_id = targetId;
+    } else {
+        return { error: { message: "Invalid comment target." } };
+    }
+
+    const result = await supabaseClient
+        .from("yearbook_comments")
+        .insert(data);
+
+    return result;
+}
+
+
+/* ---------- LOAD COMMENTS ---------- */
+
+async function getYearbookComments(targetType, targetId) {
+
+    let query = supabaseClient
+        .from("yearbook_comments")
+        .select("*")
+        .order("created_at", { ascending: true });
+
+    if (targetType === "student") {
+        query = query.eq("student_id", targetId);
+    } else if (targetType === "memory") {
+        query = query.eq("memory_id", targetId);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+        console.error("Comment loading error:", error);
+        return [];
+    }
+
+    return data || [];
+}
+
+
+/* ---------- LIKE COUNT ---------- */
+
+async function getMemoryLikeCount(memoryId) {
+
+    const { count, error } = await supabaseClient
+        .from("yearbook_likes")
+        .select("*", {
+            count: "exact",
+            head: true
+        })
+        .eq("memory_id", memoryId);
+
+    if (error) {
+        console.error("Like count error:", error);
+        return 0;
+    }
+
+    return count || 0;
+}
+
+
+/* ---------- LIKE MEMORY ---------- */
+
+async function likeMemory(memoryId) {
+
+    const storageKey = "yearbook_liked_memory_" + memoryId;
+
+    if (localStorage.getItem(storageKey) === "true") {
+        return {
+            alreadyLiked: true,
+            count: await getMemoryLikeCount(memoryId)
+        };
+    }
+
+    const { error } = await supabaseClient
+        .from("yearbook_likes")
+        .insert({
+            memory_id: memoryId
+        });
+
+    if (error) {
+        console.error("Like error:", error);
+        return {
+            error: error
+        };
+    }
+
+    localStorage.setItem(storageKey, "true");
+
+    return {
+        alreadyLiked: false,
+        count: await getMemoryLikeCount(memoryId)
+    };
+}
+
+
+/* ---------- CHECK IF THIS DEVICE LIKED ---------- */
+
+function hasLikedMemory(memoryId) {
+    return localStorage.getItem(
+        "yearbook_liked_memory_" + memoryId
+    ) === "true";
+}
+
+
+/* ---------- COMMENT HTML ---------- */
+
+function createCommentHTML(comment) {
+
+    const name = escapeHTML(
+        comment.commenter_name || "Anonymous"
+    );
+
+    const text = escapeHTML(
+        comment.comment || ""
+    );
+
+    let date = "";
+
+    if (comment.created_at) {
+        date = new Date(
+            comment.created_at
+        ).toLocaleDateString();
+    }
+
+    return `
+        <div class="yearbook-comment">
+            <div class="yearbook-comment-name">
+                ${name}
+            </div>
+
+            <div class="yearbook-comment-text">
+                ${text}
+            </div>
+
+            ${
+                date
+                ? `<div class="yearbook-comment-date">${date}</div>`
+                : ""
+            }
+        </div>
+    `;
+}
+
+
+/* ---------- RENDER COMMENTS ---------- */
+
+async function renderYearbookComments(
+    containerId,
+    targetType,
+    targetId
+) {
+
+    const container =
+        document.getElementById(containerId);
+
+    if (!container) return;
+
+    container.innerHTML =
+        `<div class="yearbook-comments-loading">
+            Loading comments...
+        </div>`;
+
+    const comments =
+        await getYearbookComments(
+            targetType,
+            targetId
+        );
+
+    if (comments.length === 0) {
+
+        container.innerHTML =
+            `<div class="yearbook-no-comments">
+                No messages yet. Be the first to leave one.
+            </div>`;
+
+        return;
+    }
+
+    container.innerHTML =
+        comments
+            .map(createCommentHTML)
+            .join("");
+}
 </script>
 
 </body>
