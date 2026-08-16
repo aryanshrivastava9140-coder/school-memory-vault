@@ -2629,8 +2629,8 @@ function filterMemories(
 ===================================================== */
 
 function memoryImage(memory){
-
     return (
+        memory.file_url ||
         memory.photo_url ||
         memory.image_url ||
         memory.url ||
@@ -3093,7 +3093,7 @@ async function submitMemory(event){
                 .insert({
                     category:category,
                     caption:caption,
-                    photo_url:publicURL
+                    file_url: publicURL
                 });
 
         if(insert.error)
