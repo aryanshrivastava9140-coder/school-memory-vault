@@ -2883,8 +2883,7 @@ function createEmptySide(){
 
 function createMemoryCard(memory){
 
-    const image =
-        memoryImage(memory);
+    const image = memoryImage(memory);
 
     const caption =
         memory.caption ||
@@ -2894,45 +2893,38 @@ function createMemoryCard(memory){
     let date = "";
 
     if(memory.created_at){
-
-        const d =
-            new Date(
-                memory.created_at
-            );
+        const d = new Date(memory.created_at);
 
         if(!isNaN(d)){
-
-            date =
-                d.toLocaleDateString(
-                    undefined,
-                    {
-                        day:"numeric",
-                        month:"short",
-                        year:"numeric"
-                    }
-                );
+            date = d.toLocaleDateString(
+                undefined,
+                {
+                    day:"numeric",
+                    month:"short",
+                    year:"numeric"
+                }
+            );
         }
     }
+
+    const memoryId = memory.id || "";
 
     return `
         <article
             class="memory-card"
-            onclick="openPhotoViewer(
-                '${escapeAttribute(image)}',
-                '${escapeAttribute(caption)}'
-            )">
+            onclick="openPhotoViewer('${escapeAttribute(image)}','${escapeAttribute(caption)}')"
+        >
 
             <img
                 src="${escapeAttribute(image)}"
                 alt="${escapeAttribute(caption)}"
-                loading="lazy">
+                loading="lazy"
+            >
 
             <div class="memory-info">
 
                 <div class="memory-category">
-                    ${escapeHTML(
-                        memory.category || "Memory"
-                    )}
+                    ${escapeHTML(memory.category || "Memory")}
                 </div>
 
                 <div class="memory-caption">
@@ -2942,12 +2934,44 @@ function createMemoryCard(memory){
                 ${
                     date
                     ? `
-                        <div class="memory-date">
-                            ${escapeHTML(date)}
-                        </div>
+                    <div class="memory-date">
+                        ${escapeHTML(date)}
+                    </div>
                     `
                     : ""
                 }
+
+                <!-- LIKE + COMMENT -->
+
+                <div
+                    class="memory-social"
+                    onclick="event.stopPropagation();"
+                >
+
+                    <button
+                        class="memory-like-button"
+                        type="button"
+                        onclick="event.stopPropagation(); likeMemory('${escapeAttribute(memoryId)}')"
+                    >
+                        ❤️ <span id="like-count-${escapeAttribute(memoryId)}">0</span>
+                    </button>
+
+                    <button
+                        class="memory-comment-button"
+                        type="button"
+                        onclick="event.stopPropagation(); openMemoryComments('${escapeAttribute(memoryId)}')"
+                    >
+                        💬 Comments
+                    </button>
+
+                </div>
+
+                <div
+                    id="comments-${escapeAttribute(memoryId)}"
+                    class="memory-comments"
+                    style="display:none;"
+                >
+                </div>
 
             </div>
 
