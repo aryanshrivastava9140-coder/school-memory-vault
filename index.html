@@ -3584,6 +3584,8 @@ function createCommentHTML(comment) {
     `;
 }
  function openMemoryComments(memoryId) {
+    alert("Comments clicked: " + memoryId);
+
     let container = document.getElementById("comments-" + memoryId);
 
     if (!container) {
