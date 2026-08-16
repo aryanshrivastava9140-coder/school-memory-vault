@@ -3583,6 +3583,27 @@ function createCommentHTML(comment) {
         </div>
     `;
 }
+ function openMemoryComments(memoryId) {
+    const container = document.getElementById("comments-" + memoryId);
+
+    if (!container) {
+        console.error("Comments container not found:", memoryId);
+        return;
+    }
+
+    // Show / hide comments
+    if (container.style.display === "none" || container.style.display === "") {
+        container.style.display = "block";
+
+        renderYearbookComments(
+            "comments-" + memoryId,
+            "memory",
+            memoryId
+        );
+    } else {
+        container.style.display = "none";
+    }
+ }
 
 
 /* ---------- RENDER COMMENTS ---------- */
