@@ -3482,13 +3482,25 @@ async function likeMemory(memoryId) {
 
     const storageKey = "yearbook_liked_memory_" + memoryId;
 
+    // Check if already liked on this device
     if (localStorage.getItem(storageKey) === "true") {
+
+        const count = await getMemoryLikeCount(memoryId);
+
+        const countElement =
+            document.getElementById("like-count-" + memoryId);
+
+        if (countElement) {
+            countElement.textContent = count;
+        }
+
         return {
             alreadyLiked: true,
-            count: await getMemoryLikeCount(memoryId)
+            count: count
         };
     }
 
+    // Insert the like into Supabase
     const { error } = await supabaseClient
         .from("yearbook_likes")
         .insert({
@@ -3497,16 +3509,29 @@ async function likeMemory(memoryId) {
 
     if (error) {
         console.error("Like error:", error);
+
         return {
             error: error
         };
     }
 
+    // Remember that this device has liked it
     localStorage.setItem(storageKey, "true");
+
+    // Get the new total
+    const count = await getMemoryLikeCount(memoryId);
+
+    // Update the number visible on the card
+    const countElement =
+        document.getElementById("like-count-" + memoryId);
+
+    if (countElement) {
+        countElement.textContent = count;
+    }
 
     return {
         alreadyLiked: false,
-        count: await getMemoryLikeCount(memoryId)
+        count: count
     };
 }
 
