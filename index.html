@@ -3584,15 +3584,40 @@ function createCommentHTML(comment) {
     `;
 }
  function openMemoryComments(memoryId) {
-    const container = document.getElementById("comments-" + memoryId);
+    let container = document.getElementById("comments-" + memoryId);
 
     if (!container) {
-        console.error("Comments container not found:", memoryId);
+        const buttons = document.querySelectorAll(".memory-comment-button");
+
+        for (const button of buttons) {
+            const onclickCode = button.getAttribute("onclick") || "";
+
+            if (onclickCode.includes(memoryId)) {
+                const card = button.closest("article");
+
+                if (card) {
+                    container = document.createElement("div");
+                    container.id = "comments-" + memoryId;
+                    container.className = "memory-comments";
+                    container.style.display = "none";
+
+                    card.appendChild(container);
+                }
+
+                break;
+            }
+        }
+    }
+
+    if (!container) {
+        console.error("Could not create comments container:", memoryId);
         return;
     }
 
-    // Show / hide comments
-    if (container.style.display === "none" || container.style.display === "") {
+    if (
+        container.style.display === "none" ||
+        container.style.display === ""
+    ) {
         container.style.display = "block";
 
         renderYearbookComments(
