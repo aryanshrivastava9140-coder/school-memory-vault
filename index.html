@@ -1234,6 +1234,107 @@ footer{
         transition-duration:.01ms!important;
     }
 }
+ /* =========================================
+   YEARBOOK COMMENTS
+   ========================================= */
+
+.yearbook-comment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-top: 10px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid rgba(60, 45, 35, 0.15);
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.yearbook-comment-form input,
+.yearbook-comment-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #cfc5b8;
+    background: #faf8f3;
+    color: #302a25;
+    padding: 8px 9px;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 12px;
+    outline: none;
+}
+
+.yearbook-comment-form input:focus,
+.yearbook-comment-form textarea:focus {
+    border-color: #8a7461;
+}
+
+.yearbook-comment-form textarea {
+    resize: vertical;
+    min-height: 58px;
+}
+
+.yearbook-comment-form button {
+    align-self: flex-start;
+    border: none;
+    background: #59483b;
+    color: white;
+    padding: 8px 13px;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.yearbook-comment-form button:hover {
+    opacity: 0.88;
+}
+
+.yearbook-comment-form button:disabled {
+    opacity: 0.55;
+    cursor: wait;
+}
+
+/* Comment list */
+
+.yearbook-comments-list {
+    margin-top: 8px;
+}
+
+.yearbook-comment {
+    margin-top: 7px;
+    padding: 9px 10px;
+    background: rgba(255, 255, 255, 0.75);
+    border-left: 3px solid #8a7461;
+    border-radius: 5px;
+}
+
+.yearbook-comment-name {
+    font-weight: 600;
+    font-size: 12px;
+    color: #332a24;
+}
+
+.yearbook-comment-text {
+    margin-top: 3px;
+    font-size: 12px;
+    line-height: 1.4;
+    color: #514941;
+}
+
+.yearbook-comment-date {
+    margin-top: 4px;
+    font-size: 9px;
+    color: #91877e;
+}
+
+.yearbook-no-comments {
+    margin-top: 7px;
+    padding: 7px;
+    font-size: 11px;
+    color: #766b62;
+    font-style: italic;
+}
 </style>
 </head>
 
