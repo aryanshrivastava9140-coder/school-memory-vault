@@ -3643,42 +3643,114 @@ function createCommentHTML(comment) {
 
 /* ---------- RENDER COMMENTS ---------- */
 
-async function renderYearbookComments(
-    containerId,
-    targetType,
-    targetId
-) {
-
-    const container =
-        document.getElementById(containerId);
+async function renderYearbookComments(containerId, targetType, targetId) {
+    const container = document.getElementById(containerId);
 
     if (!container) return;
 
-    container.innerHTML =
-        `<div class="yearbook-comments-loading">
-            Loading comments...
-        </div>`;
+    container.innerHTML = `
+        <div class="yearbook-comment-form">
+            <input
+                type="text"
+                id="comment-name-${targetId}"
+                placeholder="Your name"
+                maxlength="50"
+            >
 
-    const comments =
-        await getYearbookComments(
+            <textarea
+                id="comment-text-${targetId}"
+                placeholder="Write a comment..."
+                maxlength="500"
+                rows="3"
+            ></textarea>
+
+            <button
+                type="button"
+                id="comment-submit-${targetId}"
+            >
+                Post Comment
+            </button>
+        </div>
+
+        <div class="yearbook-comments-list">
+            <div class="yearbook-comments-loading">
+                Loading comments...
+            </div>
+        </div>
+    `;
+
+    const nameInput = document.getElementById(
+        `comment-name-${targetId}`
+    );
+
+    const textInput = document.getElementById(
+        `comment-text-${targetId}`
+    );
+
+    const submitButton = document.getElementById(
+        `comment-submit-${targetId}`
+    );
+
+    const commentsList = container.querySelector(
+        ".yearbook-comments-list"
+    );
+
+    submitButton.addEventListener("click", async () => {
+        const name = nameInput.value.trim();
+        const comment = textInput.value.trim();
+
+        if (!name || !comment) {
+            alert("Please enter your name and comment.");
+            return;
+        }
+
+        submitButton.disabled = true;
+        submitButton.textContent = "Posting...";
+
+        const result = await addYearbookComment(
+            targetType,
+            targetId,
+            name,
+            comment
+        );
+
+        if (result.error) {
+            alert(result.error.message || "Could not post comment.");
+            submitButton.disabled = false;
+            submitButton.textContent = "Post Comment";
+            return;
+        }
+
+        nameInput.value = "";
+        textInput.value = "";
+
+        submitButton.disabled = false;
+        submitButton.textContent = "Post Comment";
+
+        await renderYearbookComments(
+            containerId,
             targetType,
             targetId
         );
+    });
+
+    const comments = await getYearbookComments(
+        targetType,
+        targetId
+    );
 
     if (comments.length === 0) {
-
-        container.innerHTML =
-            `<div class="yearbook-no-comments">
+        commentsList.innerHTML = `
+            <div class="yearbook-no-comments">
                 No messages yet. Be the first to leave one.
-            </div>`;
-
+            </div>
+        `;
         return;
     }
 
-    container.innerHTML =
-        comments
-            .map(createCommentHTML)
-            .join("");
+    commentsList.innerHTML = comments
+        .map(createCommentHTML)
+        .join("");
 }
 </script>
 
