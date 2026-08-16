@@ -3649,7 +3649,10 @@ async function renderYearbookComments(containerId, targetType, targetId) {
     if (!container) return;
 
     container.innerHTML = `
-        <div class="yearbook-comment-form">
+    <div
+        class="yearbook-comment-form"
+        onclick="event.stopPropagation();"
+    >
             <input
                 type="text"
                 id="comment-name-${targetId}"
