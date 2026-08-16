@@ -2765,12 +2765,18 @@ function createFeatureMemory(memory){
         "Memory";
 
     return `
+        
         <article
-            class="feature-card"
-            onclick="openPhotoViewer(
+    class="feature-card"
+    onclick="
+        if (!event.target.closest('.memory-comments')) {
+            openPhotoViewer(
                 '${escapeAttribute(image)}',
                 '${escapeAttribute(caption)}'
-            )">
+            );
+        }
+    "
+>
 
             <img
                 src="${escapeAttribute(image)}"
